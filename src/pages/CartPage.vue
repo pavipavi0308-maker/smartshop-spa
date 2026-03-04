@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useCart } from "../store/cart"
 
-const { cart } = useCart()
+const { cart, removeFromCart } = useCart()
 </script>
 
 <template>
@@ -20,6 +20,13 @@ const { cart } = useCart()
       <h3>{{ item.title }}</h3>
 
       <p>${{ item.price }}</p>
+
+      <button
+       @click="removeFromCart(item.id)"
+       style="margin-top:10px; padding:5px 10px; background:red; color:white; border:none;"
+       >
+       Remove
+       </button>
 
     </div>
 

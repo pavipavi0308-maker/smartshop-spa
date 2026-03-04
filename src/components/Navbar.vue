@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useCart } from "../store/cart"
+import { useRouter } from "vue-router"
+
+
 
 const { cart } = useCart()
+const router = useRouter()
 </script>
 
 <template>
@@ -9,9 +13,9 @@ const { cart } = useCart()
     
     <h2>SmartShop</h2>
 
-    <div>
-      🛒 Cart ({{ cart.length }})
-    </div>
+    <div @click="router.push('/cart')" style="cursor:pointer;">
+  🛒 Cart ({{ cart.length }})
+</div>
 
   </div>
 </template>
