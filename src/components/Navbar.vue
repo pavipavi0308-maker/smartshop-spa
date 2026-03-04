@@ -28,7 +28,7 @@ SmartShop
 
 <button
 @click="toggleDarkMode"
-style="margin-left:15px; padding:5px 10px; border:1px solid #ccc; cursor:pointer;"
+style="margin-left:15px; padding:5px 10px; cursor:pointer;"
 >
 🌙
 </button>
