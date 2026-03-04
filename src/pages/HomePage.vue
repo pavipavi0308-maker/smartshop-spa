@@ -7,11 +7,12 @@ import ProductCard from "../components/ProductCard.vue"
 const products = ref<Product[]>([])
 const search = ref("")
 const selectedCategory = ref("all")
+const sortOrder = ref("default")
 
 const categories = ["all", "beauty", "fragrances"]
 
 const filteredProducts = computed(() => {
-  return products.value.filter((product) => {
+  let list = products.value.filter((product) => {
     const matchSearch = product.title
       .toLowerCase()
       .includes(search.value.toLowerCase())
@@ -22,6 +23,16 @@ const filteredProducts = computed(() => {
 
     return matchSearch && matchCategory
   })
+
+  if (sortOrder.value === "low") {
+    list = [...list].sort((a, b) => a.price - b.price)
+  }
+
+  if (sortOrder.value === "high") {
+    list = [...list].sort((a, b) => b.price - a.price)
+  }
+
+  return list
 })
 
 onMounted(async () => {
@@ -33,13 +44,22 @@ onMounted(async () => {
   <div>
     <h1>Products</h1>
 
+    <!-- Search -->
     <input
       v-model="search"
       placeholder="Search products..."
       style="padding:8px; width:300px; margin-bottom:20px;"
     />
 
-    <div style="margin-bottom:20px;">
+    <!-- Sort -->
+    <select v-model="sortOrder" style="margin-left:20px; padding:5px;">
+      <option value="default">Sort</option>
+      <option value="low">Price Low → High</option>
+      <option value="high">Price High → Low</option>
+    </select>
+
+    <!-- Category Filter -->
+    <div style="margin-top:20px; margin-bottom:20px;">
       <button
         v-for="cat in categories"
         :key="cat"
@@ -50,6 +70,7 @@ onMounted(async () => {
       </button>
     </div>
 
+    <!-- Products Grid -->
     <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;">
       <ProductCard
         v-for="product in filteredProducts"
@@ -57,5 +78,6 @@ onMounted(async () => {
         :product="product"
       />
     </div>
+
   </div>
 </template>
