@@ -1,7 +1,11 @@
+
 <script setup lang="ts">
-import HomePage from "./pages/HomePage.vue"
+import Navbar from "./components/Navbar.vue"
 </script>
 
+
+
 <template>
+  <Navbar />
   <router-view />
 </template>
