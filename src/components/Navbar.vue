@@ -15,8 +15,23 @@ const router = useRouter()
 SmartShop
 </h2>
 
-    <div @click="router.push('/cart')" style="cursor:pointer;">
-  🛒 Cart ({{ cart.length }})
+   <div @click="router.push('/cart')" style="cursor:pointer; position:relative;">
+
+  🛒 Cart
+
+  <span
+  v-if="cart.length > 0"
+  style="
+  background:red;
+  color:white;
+  padding:2px 6px;
+  border-radius:50%;
+  font-size:12px;
+  margin-left:5px;
+  ">
+  {{ cart.length }}
+  </span>
+
 </div>
 
   </div>
