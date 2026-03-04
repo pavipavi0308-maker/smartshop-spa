@@ -83,5 +83,11 @@ onMounted(async () => {
       />
     </div>
 
+    <p v-if="!loading && filteredProducts.length === 0">
+     No products found
+    </p>
+
+
+
   </div>
 </template>
