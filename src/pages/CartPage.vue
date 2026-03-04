@@ -36,7 +36,14 @@ const total = computed(() => {
 
       <div>
         <h3 style="margin:0;">{{ item.title }}</h3>
-        <p style="margin:0; color:red;">${{ item.price }}</p>
+
+        <p style="margin:0; color:red;">
+        ${{ item.price }} × {{ item.quantity }} = 
+        <strong>${{ (item.price * item.quantity).toFixed(2) }}</strong>
+        </p>
+
+
+
       </div>
 
       <div style="display:flex; align-items:center; gap:10px;">
