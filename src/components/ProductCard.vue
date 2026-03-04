@@ -19,14 +19,36 @@ function goToProduct() {
 <template>
 <div
 @click="goToProduct"
-style="border:1px solid #eee; padding:15px; border-radius:8px; background:white; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;"
+
+style="border:1px solid #eee; padding:15px; border-radius:8px; background:white; cursor:pointer; position:relative; transition:transform 0.3s, box-shadow 0.3s;"
+
+
 onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'"
+
 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
 >
-    <img :src="props.product.thumbnail" style="width:100%; height:150px; object-fit:cover;" />
 
-    <h3 style="font-size:16px; margin-top:10px;">
-        {{ props.product.title }}
+<span
+v-if="props.product.discountPercentage"
+style="
+position:absolute;
+top:10px;
+left:10px;
+background:red;
+color:white;
+padding:3px 6px;
+font-size:12px;
+border-radius:4px;
+"
+>
+-{{ props.product.discountPercentage }}%
+</span>
+
+
+   <img :src="props.product.thumbnail" style="width:100%; height:150px; object-fit:cover;" />
+
+    <h3 style="font-size:16px; margin-top:10px; height:40px; overflow:hidden;">
+    {{ props.product.title }}
     </h3>
 
     <p style="color:red; font-weight:bold;">
