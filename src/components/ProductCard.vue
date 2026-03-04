@@ -17,11 +17,11 @@ function goToProduct() {
 </script>
 
 <template>
- <div
+<div
 @click="goToProduct"
-style="border:1px solid #eee; padding:15px; border-radius:8px; background:white; cursor:pointer; transition:0.3s;"
-onmouseover="this.style.boxShadow='0 4px 15px rgba(0,0,0,0.15)'"
-onmouseout="this.style.boxShadow='none'"
+style="border:1px solid #eee; padding:15px; border-radius:8px; background:white; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;"
+onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.2)'"
+onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
 >
     <img :src="props.product.thumbnail" style="width:100%; height:150px; object-fit:cover;" />
 
