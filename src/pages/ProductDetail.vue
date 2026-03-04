@@ -20,34 +20,59 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-   v-if="product" style="padding:20px; display:flex; gap:40px;">
-  
-   <button @click="$router.push('/')" style="margin-bottom:20px;">
-    ← Back to Products
-     </button>
 
-     <img :src="product.thumbnail" style="width:300px;" />
+<div style="padding:20px;">
 
-    <div>
-      <h1>{{ product.title }}</h1>
+<button @click="$router.push('/')" style="margin-bottom:20px;">
+← Back to Products
+</button>
 
-      <p style="color:red; font-size:20px;">
-        ${{ product.price }}
-      </p>
+<div
+v-if="product"
+style="
+display:flex;
+flex-wrap:wrap;
+gap:40px;
+align-items:flex-start;
+"
+>
 
-       <button
-     @click="addToCart(product!)"
-     style="margin-top:20px; padding:10px; background:red; color:white; border:none;"
-    >
-    Add to Cart
-    </button>
+<img
+:src="product.thumbnail"
+style="width:300px; height:300px; object-fit:contain;"
+/>
 
-      <p>{{ product.description }}</p>
+<div>
 
-      <p>⭐ Rating: {{ product.rating }}</p>
+<h1>{{ product.title }}</h1>
 
-    </div>
+<p style="color:gray;">
+Category: {{ product.category }}
+</p>
 
-  </div>
+<p style="color:red; font-size:20px;">
+${{ product.price }}
+</p>
+
+<button
+@click="addToCart(product!)"
+style="margin-top:20px; padding:10px; background:red; color:white; border:none;"
+>
+Add to Cart
+</button>
+
+<p style="margin-top:20px;">
+{{ product.description }}
+</p>
+
+<p>
+⭐ Rating: {{ product.rating }}
+</p>
+
+</div>
+
+</div>
+
+</div>
+
 </template>
