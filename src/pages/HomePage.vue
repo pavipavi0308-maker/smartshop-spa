@@ -99,8 +99,9 @@ animation:spin 1s linear infinite;
        </div>
 
     <!-- Products Grid -->
-    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;">
-      <ProductCard
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">     
+        
+        <ProductCard
         v-for="product in filteredProducts"
         :key="product.id"
         :product="product"
