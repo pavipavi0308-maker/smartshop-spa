@@ -14,8 +14,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="product" style="padding:20px; display:flex; gap:40px;">
-    
+  <div
+   v-if="product" style="padding:20px; display:flex; gap:40px;">
+  
+   <button @click="$router.push('/')" style="margin-bottom:20px;">
+    ← Back to Products
+     </button>
+
     <img :src="product.thumbnail" style="width:300px;" />
 
     <div>
