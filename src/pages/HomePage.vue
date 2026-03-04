@@ -8,6 +8,7 @@ const products = ref<Product[]>([])
 const search = ref("")
 const selectedCategory = ref("all")
 const sortOrder = ref("default")
+const loading = ref(true)
 
 const categories = ["all", "beauty", "fragrances"]
 
@@ -37,12 +38,15 @@ const filteredProducts = computed(() => {
 
 onMounted(async () => {
   products.value = await fetchProducts()
+  loading.value = false
 })
+
 </script>
 
 <template>
   <div>
     <h1>Products</h1>
+    <p v-if="loading">Loading products...</p>
 
     <!-- Search -->
     <input
