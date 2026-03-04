@@ -34,12 +34,18 @@ const total = computed(() => {
        >
        Remove
        </button>
+     </div>
 
-       <h2 style="margin-top:20px;">
+     <h2 style="margin-top:20px;">
        Total: ${{ total }}
        </h2>
 
-    </div>
+    <button
+    @click="alert('Order placed successfully!')"
+    style="margin-top:20px; padding:10px 20px; background:green; color:white; border:none;"
+    >
+    Checkout
+    </button> 
 
   </div>
 </template>
