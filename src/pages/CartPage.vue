@@ -54,7 +54,7 @@ const total = computed(() => {
     </h2>
 
     <button
-      @click="alert('Order placed successfully!')"
+     @click="window.alert('Order placed successfully!')"
       style="margin-top:20px; padding:10px 20px; background:green; color:white; border:none;"
     >
       Checkout
