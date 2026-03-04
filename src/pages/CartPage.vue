@@ -3,9 +3,10 @@ import { useCart } from "../store/cart"
 import { computed } from "vue"
 
 
-const { cart, removeFromCart } = useCart()
+const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useCart()
+
 const total = computed(() => {
-  return cart.value.reduce((sum, item) => sum + item.price, 0)
+  return cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
 })
 
 
@@ -27,6 +28,14 @@ const total = computed(() => {
       <h3>{{ item.title }}</h3>
 
       <p>${{ item.price }}</p>
+      
+     <div style="display:flex; align-items:center; gap:10px;">
+     <button @click="decreaseQuantity(item.id)">−</button>
+
+     <span>Qty: {{ item.quantity }}</span>
+
+     <button @click="increaseQuantity(item.id)">+</button>
+     </div>
 
       <button
        @click="removeFromCart(item.id)"

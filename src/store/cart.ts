@@ -26,13 +26,31 @@ function addToCart(product: Product) {
     localStorage.setItem("cart", JSON.stringify(cart.value))
   }
 
+function increaseQuantity(id: number) {
+  const item = cart.value.find(p => p.id === id)
+  if (item) {
+    item.quantity += 1
+  }
+  localStorage.setItem("cart", JSON.stringify(cart.value))
+}
 
+function decreaseQuantity(id: number) {
+  const item = cart.value.find(p => p.id === id)
+
+  if (item && item.quantity > 1) {
+    item.quantity -= 1
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart.value))
+}
 
   
 
   return {
-    cart,
-    addToCart,
-    removeFromCart
+  cart,
+  addToCart,
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity
   }
 }
