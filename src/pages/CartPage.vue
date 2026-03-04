@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { useCart } from "../store/cart"
+import { computed } from "vue"
+
 
 const { cart, removeFromCart } = useCart()
+const total = computed(() => {
+  return cart.value.reduce((sum, item) => sum + item.price, 0)
+})
+
+
 </script>
 
 <template>
@@ -27,6 +34,10 @@ const { cart, removeFromCart } = useCart()
        >
        Remove
        </button>
+
+       <h2 style="margin-top:20px;">
+       Total: ${{ total }}
+       </h2>
 
     </div>
 
