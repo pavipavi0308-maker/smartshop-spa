@@ -44,8 +44,16 @@ onMounted(async () => {
 </script>
 
 <template>
+
+    
+
+
+
+
   <div>
-    <h1>Products</h1>
+
+   <h1 class="text-2xl font-bold mb-4">Products</h1>
+
 <div v-if="loading" style="text-align:center; margin-top:40px;">
 
 <div
@@ -99,9 +107,9 @@ animation:spin 1s linear infinite;
        </div>
 
     <!-- Products Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">     
-        
-        <ProductCard
+<div v-if="!loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">        
+       
+    <ProductCard
         v-for="product in filteredProducts"
         :key="product.id"
         :product="product"

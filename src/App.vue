@@ -4,16 +4,11 @@ import Navbar from "./components/Navbar.vue"
 </script>
 
 
-
 <template>
-
-  <h1 class="text-4xl font-bold text-blue-600">
-  Tailwind Working
-</h1>
-
-
-
+<div class="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
 
   <Navbar />
   <router-view />
+
+</div>
 </template>
