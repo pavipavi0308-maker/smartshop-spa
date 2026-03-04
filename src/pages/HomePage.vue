@@ -65,14 +65,21 @@ onMounted(async () => {
     <!-- Category Filter -->
     <div style="margin-top:20px; margin-bottom:20px;">
       <button
-        v-for="cat in categories"
-        :key="cat"
-        @click="selectedCategory = cat"
-        style="margin-right:10px; padding:5px 10px;"
-      >
-        {{ cat }}
-      </button>
-    </div>
+       v-for="cat in categories"
+       :key="cat"
+       @click="selectedCategory = cat"
+       :style="{
+       marginRight: '10px',
+       padding: '5px 10px',
+       background: selectedCategory === cat ? '#333' : '#eee',
+       color: selectedCategory === cat ? 'white' : 'black',
+       border: 'none',
+       cursor: 'pointer'
+       }"
+       >  
+       {{ cat }}
+       </button>
+       </div>
 
     <!-- Products Grid -->
     <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;">
