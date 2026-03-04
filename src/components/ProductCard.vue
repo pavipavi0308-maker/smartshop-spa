@@ -51,9 +51,19 @@ border-radius:4px;
     {{ props.product.title }}
     </h3>
 
+
+    <div style="margin-top:5px;">
+
     <p style="color:red; font-weight:bold;">
-        ${{ props.product.price }}
+    ${{ (props.product.price * (1 - props.product.discountPercentage / 100)).toFixed(2) }}
     </p>
+
+    <p style="text-decoration:line-through; color:gray; font-size:13px;">
+    ${{ props.product.price }}
+    </p>
+
+    </div>
+    
    
     <p style="color:orange;">
     ⭐ {{ props.product.rating }}
