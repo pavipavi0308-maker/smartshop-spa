@@ -32,6 +32,10 @@ onmouseout="this.style.boxShadow='none'"
     <p style="color:red; font-weight:bold;">
         ${{ props.product.price }}
     </p>
+   
+    <p style="color:orange;">
+    ⭐ {{ props.product.rating }}
+    </p>
 
   </div>
 </template>
