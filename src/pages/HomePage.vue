@@ -46,7 +46,24 @@ onMounted(async () => {
 <template>
   <div>
     <h1>Products</h1>
-    <p v-if="loading">Loading products...</p>
+<div v-if="loading" style="text-align:center; margin-top:40px;">
+
+<div
+style="
+width:40px;
+height:40px;
+border:4px solid #ddd;
+border-top:4px solid #333;
+border-radius:50%;
+margin:auto;
+animation:spin 1s linear infinite;
+"
+></div>
+
+<p style="margin-top:10px;">Loading products...</p>
+
+</div>
+
 
     <!-- Search -->
     <input
@@ -94,7 +111,12 @@ onMounted(async () => {
      No products found
     </p>
 
-
-
   </div>
 </template>
+
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
