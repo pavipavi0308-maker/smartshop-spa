@@ -63,11 +63,17 @@ border-radius:4px;
     </p>
 
     </div>
-    
+
    
-    <p style="color:orange;">
-    ⭐ {{ props.product.rating }}
-    </p>
+    <div style="color:orange; font-size:14px;">
+<span v-for="i in Math.round(props.product.rating)" :key="i">
+⭐
+</span>
+
+<span style="color:gray; margin-left:5px;">
+({{ props.product.rating }})
+</span>
+</div>
 
   </div>
 </template>
