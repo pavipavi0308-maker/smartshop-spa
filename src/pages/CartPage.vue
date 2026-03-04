@@ -21,40 +21,52 @@ const total = computed(() => {
       Cart is empty
     </div>
 
-    <div v-for="item in cart" :key="item.id" style="border:1px solid #ddd; padding:10px; margin-top:10px;">
-      
-      <img :src="item.thumbnail" width="80" />
+    <div
+    v-for="item in cart"
+    :key="item.id"
+    style="
+    display:grid;
+    grid-template-columns:80px 1fr 150px 100px;
+    align-items:center;
+    gap:15px;
+    border:1px solid #ddd;
+    padding:10px;
+    margin-top:10px;
+    "
+    >
 
-      <h3>{{ item.title }}</h3>
+    <img :src="item.thumbnail" style="width:80px;" />
 
-      <p>${{ item.price }}</p>
-      
-     <div style="display:flex; align-items:center; gap:10px;">
-     <button @click="decreaseQuantity(item.id)">−</button>
+    <div>
+      <h3 style="margin:0;">{{ item.title }}</h3>
+      <p style="margin:0; color:red;">${{ item.price }}</p>
+    </div>
 
-     <span>Qty: {{ item.quantity }}</span>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button @click="decreaseQuantity(item.id)">−</button>
+      <span>{{ item.quantity }}</span>
+      <button @click="increaseQuantity(item.id)">+</button>
+    </div>
 
-     <button @click="increaseQuantity(item.id)">+</button>
-     </div>
+    <button
+    @click="removeFromCart(item.id)"
+    style="padding:5px 10px; background:red; color:white; border:none;"
+    >
+    Remove
+    </button>
 
-      <button
-       @click="removeFromCart(item.id)"
-       style="margin-top:10px; padding:5px 10px; background:red; color:white; border:none;"
-       >
-       Remove
-       </button>
-     </div>
+    </div>
 
-     <h2 style="margin-top:20px;">
-       Total: ${{ total }}
-       </h2>
+    <h2 style="margin-top:20px;">
+      Total: ${{ total }}
+    </h2>
 
     <button
     @click="alert('Order placed successfully!')"
     style="margin-top:20px; padding:10px 20px; background:green; color:white; border:none;"
     >
     Checkout
-    </button> 
+    </button>
 
   </div>
 </template>
