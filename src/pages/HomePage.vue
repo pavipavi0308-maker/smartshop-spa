@@ -11,18 +11,33 @@ const sortOrder = ref("default")
 const loading = ref(true)
 
 const skip = ref(0)
+const hasMore = ref(true)
 
 async function loadMore() {
   skip.value += 20
-  const more = await fetchProducts(skip.value)
-  products.value = [...products.value, ...more]
+
+  try {
+    const more = await fetchProducts(skip.value)
+
+    if (more.length === 0) {
+      hasMore.value = false
+      return
+    }
+
+    products.value.push(...more)
+
+  } catch (error) {
+    console.error("Failed to load more products:", error)
+  }
 }
 
 const categories = ["all", "beauty", "fragrances"]
 
 const filteredProducts = computed(() => {
+
   let list = products.value.filter((product) => {
-    const matchSearch = product.title
+
+    const matchSearch = (product.title ?? "")
       .toLowerCase()
       .includes(search.value.toLowerCase().trim())
 
@@ -44,6 +59,12 @@ const filteredProducts = computed(() => {
   return list
 })
 
+const topDeals = computed(() => {
+  return products.value
+    .filter(p => (p.discountPercentage ?? 0) > 10)
+    .slice(0, 4)
+})
+
 onMounted(async () => {
   try {
     products.value = await fetchProducts()
@@ -55,89 +76,140 @@ onMounted(async () => {
 })
 </script>
 
+
 <template>
-  <div class="p-5">
 
-    <h1 class="text-2xl font-bold mb-4">Products</h1>
+<div class="p-5">
 
-    <!-- Search + Sort -->
-    <div class="flex flex-wrap items-center gap-4 mb-6">
-      <input
-        v-model="search"
-        placeholder="Search products..."
-        class="border p-2 rounded w-72 outline-none focus:ring-2 focus:ring-blue-500"
-      />
+  <h1 class="text-2xl font-bold mb-4">Products</h1>
 
-      <select v-model="sortOrder" class="border p-2 rounded cursor-pointer">
-        <option value="default">Sort by Price</option>
-        <option value="low">Price: Low → High</option>
-        <option value="high">Price: High → Low</option>
-      </select>
-    </div>
+  <!-- Search + Sort -->
+  <div class="flex flex-wrap items-center gap-4 mb-6">
 
-    <!-- Category Buttons -->
-    <div class="flex gap-2 mb-6 flex-wrap">
-      <button
-        v-for="cat in categories"
-        :key="cat"
-        @click="selectedCategory = cat"
-        class="px-4 py-2 rounded capitalize transition-colors"
-        :class="selectedCategory === cat 
-          ? 'bg-black text-white' 
-          : 'bg-gray-200 text-black hover:bg-gray-300'"
-      >
-        {{ cat }}
-      </button>
-    </div>
+    <input
+      v-model="search"
+      placeholder="Search products..."
+      class="border p-2 rounded w-72 outline-none focus:ring-2 focus:ring-blue-500"
+    />
 
-    <!-- Loading -->
-    <div v-if="loading" class="flex flex-col items-center mt-10">
-      <div class="loader"></div>
-      <p class="mt-3 text-gray-500">Loading products...</p>
-    </div>
-
-    <!-- Products -->
-    <template v-else>
-
-      <div 
-        v-if="filteredProducts.length > 0"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-      >
-        <ProductCard
-          v-for="product in filteredProducts"
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-
-      <!-- No Products -->
-      <div v-else class="text-center py-10 text-gray-500">
-        <p class="text-xl">No products found for "{{ search }}"</p>
-
-        <button 
-          @click="search = ''; selectedCategory = 'all'"
-          class="text-blue-500 underline mt-2"
-        >
-          Clear all filters
-        </button>
-      </div>
-
-      <!-- Load More Button -->
-      <div class="flex justify-end mt-10">
-        <button
-          @click="loadMore"
-          class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
-        >
-          Load More
-        </button>
-      </div>
-
-    </template>
+    <select
+      v-model="sortOrder"
+      class="border p-2 rounded cursor-pointer"
+    >
+      <option value="default">Sort by Price</option>
+      <option value="low">Price: Low → High</option>
+      <option value="high">Price: High → Low</option>
+    </select>
 
   </div>
+
+
+  <!-- Category Buttons -->
+  <div class="flex gap-2 mb-6 flex-wrap">
+
+    <button
+      v-for="cat in categories"
+      :key="cat"
+      @click="selectedCategory = cat"
+      class="px-4 py-2 rounded capitalize transition-colors"
+      :class="selectedCategory === cat
+        ? 'bg-black text-white'
+        : 'bg-gray-200 text-black hover:bg-gray-300'"
+    >
+      {{ cat }}
+    </button>
+
+  </div>
+
+
+  <!-- Loading -->
+  <div v-if="loading" class="flex flex-col items-center mt-10">
+
+    <div class="loader"></div>
+
+    <p class="mt-3 text-gray-500">
+      Loading products...
+    </p>
+
+  </div>
+
+
+  <!-- Top Deals -->
+  <h2 class="text-xl font-bold mb-4 mt-6">
+    🔥 Top Deals
+  </h2>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
+
+    <ProductCard
+      v-for="product in topDeals"
+      :key="product.id"
+      :product="product"
+    />
+
+  </div>
+
+
+  <!-- Products -->
+  <template v-if="filteredProducts.length > 0">
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+
+      <ProductCard
+        v-for="product in filteredProducts"
+        :key="product.id"
+        :product="product"
+      />
+
+    </div>
+
+  </template>
+
+
+  <!-- No Products -->
+  <div
+    v-else
+    class="text-center py-10 text-gray-500"
+  >
+
+    <p class="text-xl">
+      No products found for "{{ search }}"
+    </p>
+
+    <button
+      @click="search = ''; selectedCategory = 'all'"
+      class="text-blue-500 underline mt-2"
+    >
+      Clear all filters
+    </button>
+
+  </div>
+
+
+  <!-- Load More -->
+  <div
+    v-if="hasMore"
+    class="flex justify-end mt-10"
+  >
+
+    <button
+      @click="loadMore"
+      class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+    >
+      Load More
+    </button>
+
+  </div>
+
+</div>
+
 </template>
 
+
 <style scoped>
+
 .loader {
   width: 40px;
   height: 40px;
@@ -148,7 +220,15 @@ onMounted(async () => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
 }
+
 </style>
