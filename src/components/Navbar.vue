@@ -7,11 +7,8 @@ import { useRouter } from "vue-router"
 const { cart } = useCart()
 const router = useRouter()
 
-import { computed } from "vue"
 
-const cartCount = computed(() => {
-  return cart.value.reduce((total, item) => total + item.quantity, 0)
-})
+
 
 
 function toggleDarkMode() {
@@ -29,28 +26,15 @@ SmartShop
 
 <div style="display:flex; align-items:center; gap:10px;">
 
-<div 
-
-@click="router.push('/cart')" 
-style="cursor:pointer;"
+<div
+@click="router.push('/cart')"
+style="cursor:pointer; display:flex; align-items:center; gap:5px;"
 >
-🛒 Cart
 
+<span style="font-size:18px;">🛒</span>
 
-<span
-v-if="cartCount > 0"
-style="
-position:absolute;
-top:-8px;
-right:-12px;
-background:red;
-color:white;
-font-size:12px;
-padding:2px 6px;
-border-radius:50%;
-"
->
-{{ cartCount }}
+<span>
+Cart ({{ cart.length }})
 </span>
 
 </div>
