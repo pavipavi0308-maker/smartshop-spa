@@ -10,15 +10,21 @@ const selectedCategory = ref("all")
 const sortOrder = ref("default")
 const loading = ref(true)
 
+const skip = ref(0)
+
+async function loadMore() {
+  skip.value += 20
+  const more = await fetchProducts(skip.value)
+  products.value = [...products.value, ...more]
+}
+
 const categories = ["all", "beauty", "fragrances"]
 
-// Corrected Logic: Avoid mutating 'list' directly and use a cleaner flow
 const filteredProducts = computed(() => {
-  // 1. First Filter (Search + Category)
   let list = products.value.filter((product) => {
     const matchSearch = product.title
       .toLowerCase()
-      .includes(search.value.toLowerCase().trim()) // trim() added to avoid space issues
+      .includes(search.value.toLowerCase().trim())
 
     const matchCategory =
       selectedCategory.value === "all" ||
@@ -27,10 +33,10 @@ const filteredProducts = computed(() => {
     return matchSearch && matchCategory
   })
 
-  // 2. Then Sort (Create a new array copy to avoid original data mutation)
   if (sortOrder.value === "low") {
     return [...list].sort((a, b) => a.price - b.price)
   }
+
   if (sortOrder.value === "high") {
     return [...list].sort((a, b) => b.price - a.price)
   }
@@ -51,8 +57,10 @@ onMounted(async () => {
 
 <template>
   <div class="p-5">
+
     <h1 class="text-2xl font-bold mb-4">Products</h1>
 
+    <!-- Search + Sort -->
     <div class="flex flex-wrap items-center gap-4 mb-6">
       <input
         v-model="search"
@@ -67,25 +75,34 @@ onMounted(async () => {
       </select>
     </div>
 
-    <div class="flex gap-2 mb-6">
+    <!-- Category Buttons -->
+    <div class="flex gap-2 mb-6 flex-wrap">
       <button
         v-for="cat in categories"
         :key="cat"
         @click="selectedCategory = cat"
         class="px-4 py-2 rounded capitalize transition-colors"
-        :class="selectedCategory === cat ? 'bg-black text-white' : 'bg-gray-200 text-black hover:bg-gray-300'"
+        :class="selectedCategory === cat 
+          ? 'bg-black text-white' 
+          : 'bg-gray-200 text-black hover:bg-gray-300'"
       >
         {{ cat }}
       </button>
     </div>
 
+    <!-- Loading -->
     <div v-if="loading" class="flex flex-col items-center mt-10">
       <div class="loader"></div>
       <p class="mt-3 text-gray-500">Loading products...</p>
     </div>
 
+    <!-- Products -->
     <template v-else>
-      <div v-if="filteredProducts.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <div 
+        v-if="filteredProducts.length > 0"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      >
         <ProductCard
           v-for="product in filteredProducts"
           :key="product.id"
@@ -93,13 +110,30 @@ onMounted(async () => {
         />
       </div>
 
+      <!-- No Products -->
       <div v-else class="text-center py-10 text-gray-500">
         <p class="text-xl">No products found for "{{ search }}"</p>
-        <button @click="search = ''; selectedCategory = 'all'" class="text-blue-500 underline mt-2">
+
+        <button 
+          @click="search = ''; selectedCategory = 'all'"
+          class="text-blue-500 underline mt-2"
+        >
           Clear all filters
         </button>
       </div>
+
+      <!-- Load More Button -->
+      <div class="flex justify-end mt-10">
+        <button
+          @click="loadMore"
+          class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+        >
+          Load More
+        </button>
+      </div>
+
     </template>
+
   </div>
 </template>
 
