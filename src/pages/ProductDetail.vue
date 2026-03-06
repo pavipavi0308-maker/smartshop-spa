@@ -9,14 +9,20 @@ import { useCart } from "../store/cart"
 const route = useRoute()
 const product = ref<Product | null>(null)
 const { addToCart } = useCart()
-
+const selectedImage = ref("")
 
 
 onMounted(async () => {
   const res = await fetch(`https://dummyjson.com/products/${route.params.id}`)
   const data = await res.json()
   product.value = data
+  selectedImage.value = data.thumbnail
+
+
 })
+
+
+
 </script>
 
 <template>
@@ -38,9 +44,21 @@ align-items:flex-start;
 >
 
 <img
-:src="product.thumbnail"
-style="width:300px; height:300px; object-fit:contain;"
+:src="selectedImage"
+style="width:350px; height:350px; object-fit:contain; border:1px solid #eee;"
 />
+
+<div style="display:flex; gap:10px; margin-top:10px;">
+  
+  <img
+    v-for="img in product.images"
+    :key="img"
+    :src="img"
+    @click="selectedImage = img"
+    style="width:60px; height:60px; object-fit:cover; cursor:pointer; border:1px solid #ddd;"
+  />
+
+</div>
 
 <div>
 
