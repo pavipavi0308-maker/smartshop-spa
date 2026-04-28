@@ -26,7 +26,7 @@ function navigateTo(path: string) {
 </script>
 
 <template>
-  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 border-b border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-md">
+  <header class="sticky top-0 z-40 rounded-b-3xl bg-white/95 dark:bg-slate-950/95 border-b border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-md">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3 cursor-pointer" @click="navigateTo('/')">
         <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md">
@@ -41,7 +41,7 @@ function navigateTo(path: string) {
       <div class="flex flex-1 items-center justify-end gap-3">
         <button
           @click="toggleDarkMode"
-          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+          class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
         >
           <span>🌙</span>
           <span class="hidden sm:inline">Dark Mode</span>
@@ -49,7 +49,7 @@ function navigateTo(path: string) {
 
         <button
           @click="navigateTo('/cart')"
-          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+          class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
         >
           <span class="text-lg">🛒</span>
           <span>Cart</span>
@@ -60,7 +60,7 @@ function navigateTo(path: string) {
           <div v-if="isAuthenticated" class="flex items-center gap-3">
             <button
               @click="showProfileMenu = !showProfileMenu"
-              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
             >
               <img
                 :src="user?.image"
@@ -74,13 +74,13 @@ function navigateTo(path: string) {
           <div v-else class="flex items-center gap-2">
             <router-link
               to="/login"
-              class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+              class="rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Login
             </router-link>
             <router-link
               to="/register"
-              class="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+              class="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
             >
               Sign Up
             </router-link>
@@ -88,7 +88,7 @@ function navigateTo(path: string) {
 
           <div
             v-if="showProfileMenu"
-            class="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900"
+            class="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900"
           >
             <div class="px-4 py-4 border-b border-slate-200 dark:border-slate-700">
               <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ user?.firstName }} {{ user?.lastName }}</p>
