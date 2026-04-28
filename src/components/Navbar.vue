@@ -26,95 +26,96 @@ function navigateTo(path: string) {
 </script>
 
 <template>
-  <div style="display:flex; justify-content:space-between; align-items:center; padding:15px 20px; background:#222; color:white;">
-    
-    <h2 @click="router.push('/')" style="cursor:pointer; margin:0;">
-      SmartShop
-    </h2>
-
-    <div style="display:flex; align-items:center; gap:15px;">
-      <!-- Cart -->
-      <div
-        @click="router.push('/cart')"
-        style="cursor:pointer; display:flex; align-items:center; gap:5px;"
-      >
-        <span style="font-size:18px;">🛒</span>
-        <span>Cart ({{ cart.length }})</span>
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 border-b border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <div class="flex items-center gap-3 cursor-pointer" @click="navigateTo('/')">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md">
+          <span class="text-lg">S</span>
+        </div>
+        <div>
+          <p class="text-lg font-semibold text-slate-900 dark:text-white">SmartShop</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Shop smarter, faster</p>
+        </div>
       </div>
 
-      <!-- Dark Mode -->
-      <button
-        @click="toggleDarkMode"
-        style="padding:5px 10px; cursor:pointer; background:none; border:none; color:white; font-size:16px;"
-      >
-        🌙
-      </button>
+      <div class="flex flex-1 items-center justify-end gap-3">
+        <button
+          @click="toggleDarkMode"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+        >
+          <span>🌙</span>
+          <span class="hidden sm:inline">Dark Mode</span>
+        </button>
 
-      <!-- Auth -->
-      <div style="position:relative;">
-        <div v-if="isAuthenticated" style="display:flex; align-items:center; gap:10px;">
-          <!-- Profile Icon -->
-          <div
-            @click="showProfileMenu = !showProfileMenu"
-            style="cursor:pointer; display:flex; align-items:center; gap:5px; padding:5px 10px; border-radius:50%; background:#444; hover:bg:#555;"
-          >
-            <img
-              :src="user?.image"
-              :alt="user?.firstName"
-              style="width:32px; height:32px; border-radius:50%; object-fit:cover;"
-            />
+        <button
+          @click="navigateTo('/cart')"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+        >
+          <span class="text-lg">🛒</span>
+          <span>Cart</span>
+          <span class="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">{{ cart.length }}</span>
+        </button>
+
+        <div class="relative">
+          <div v-if="isAuthenticated" class="flex items-center gap-3">
+            <button
+              @click="showProfileMenu = !showProfileMenu"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+            >
+              <img
+                :src="user?.image"
+                :alt="user?.firstName"
+                class="h-8 w-8 rounded-full object-cover"
+              />
+              <span class="hidden sm:inline">Profile</span>
+            </button>
           </div>
 
-          <!-- Profile Dropdown Menu -->
+          <div v-else class="flex items-center gap-2">
+            <router-link
+              to="/login"
+              class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+            >
+              Login
+            </router-link>
+            <router-link
+              to="/register"
+              class="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+            >
+              Sign Up
+            </router-link>
+          </div>
+
           <div
             v-if="showProfileMenu"
-            style="position:absolute; top:50px; right:0; background:#333; border:1px solid #555; border-radius:8px; min-width:200px; box-shadow:0 4px 6px rgba(0,0,0,0.3); z-index:1000;"
+            class="absolute right-0 top-full mt-3 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900"
           >
-            <div style="padding:15px; border-bottom:1px solid #555;">
-              <p style="margin:0; font-weight:bold;">{{ user?.firstName }} {{ user?.lastName }}</p>
-              <p style="margin:5px 0 0 0; font-size:12px; color:#999;">@{{ user?.username }}</p>
+            <div class="px-4 py-4 border-b border-slate-200 dark:border-slate-700">
+              <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ user?.firstName }} {{ user?.lastName }}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">@{{ user?.username }}</p>
             </div>
-
             <button
               @click="navigateTo('/my-profile')"
-              style="display:block; width:100%; text-align:left; padding:12px 15px; background:none; border:none; color:white; cursor:pointer; hover:bg:#444;"
+              class="w-full px-4 py-3 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
             >
               👤 My Profile
             </button>
-
             <button
               @click="handleLogout"
-              style="display:block; width:100%; text-align:left; padding:12px 15px; background:none; border:none; color:#ff6b6b; cursor:pointer; hover:bg:#444; border-top:1px solid #555; font-weight:bold;"
+              class="w-full px-4 py-3 text-left text-sm font-semibold text-rose-600 transition hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               🚪 Logout
             </button>
           </div>
         </div>
-
-        <!-- Login/Register Buttons -->
-        <div v-else style="display:flex; gap:10px;">
-          <router-link
-            to="/login"
-            style="padding:8px 16px; background:#0066cc; color:white; text-decoration:none; border-radius:4px; cursor:pointer; font-weight:bold; hover:bg:#0052a3; transition:background 0.2s;"
-          >
-            Login
-          </router-link>
-          <router-link
-            to="/register"
-            style="padding:8px 16px; background:#28a745; color:white; text-decoration:none; border-radius:4px; cursor:pointer; font-weight:bold; hover:bg:#218838; transition:background 0.2s;"
-          >
-            Sign Up
-          </router-link>
-        </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Click outside to close menu -->
   <div
     v-if="showProfileMenu"
     @click="showProfileMenu = false"
-    style="position:fixed; top:0; left:0; right:0; bottom:0; z-index:999;"
+    class="fixed inset-0 z-30"
   ></div>
 </template>
 
