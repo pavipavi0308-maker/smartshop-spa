@@ -226,6 +226,52 @@ onMounted(async () => {
         </button>
       </div>
 
+      <footer class="mt-14 overflow-hidden rounded-[40px] border border-slate-300/60 bg-slate-400/35 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
+        <div class="grid gap-8 p-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-slate-700 dark:text-slate-400">
+              Secure payments
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <span class="rounded-2xl bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-sm">VISA</span>
+              <span class="rounded-2xl bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-sm">Mastercard</span>
+              <span class="rounded-2xl bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-sm">PayPal</span>
+              <span class="rounded-2xl bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-sm">Apple Pay</span>
+              <span class="rounded-2xl bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-sm">Google Pay</span>
+              <span class="rounded-2xl bg-white/90 px-4 py-2 text-sm font-bold text-slate-800 shadow-sm">Amex</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4 lg:items-end">
+            <p class="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Shop on the go with the SmartShop app
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <button class="rounded-2xl bg-slate-950 px-5 py-3 text-left text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-800">
+                App Store
+              </button>
+              <button class="rounded-2xl bg-slate-950 px-5 py-3 text-left text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-800">
+                Google Play
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-white/30 bg-white/45 px-8 py-6 text-center dark:border-slate-800 dark:bg-slate-950/60">
+          <div class="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+            <span>SmartShop</span>
+            <span>Help Center</span>
+            <span>Shipping</span>
+            <span>Returns</span>
+            <span>Privacy Policy</span>
+            <span>Terms of Use</span>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            © 2026 SmartShop. Shop smarter, faster.
+          </p>
+        </div>
+      </footer>
+
   </div>
 
 </div>
