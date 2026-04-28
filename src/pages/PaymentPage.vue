@@ -56,7 +56,6 @@ function onExpiryDateInput(e: Event) {
 }
 
 function validateCardDetails(): boolean {
-  // Check if cart is empty
   if (cart.value.length === 0) {
     error.value = "Your cart is empty. Please add items before checking out."
     return false
@@ -79,7 +78,6 @@ function validateCardDetails(): boolean {
       return false
     }
 
-    // Validate expiry date format MM/YY
     if (!expiryDate.value.match(/^\d{2}\/\d{2}$/)) {
       error.value = "Expiry date must be in MM/YY format"
       return false
@@ -104,11 +102,9 @@ async function processPayment() {
   loading.value = true
   error.value = ""
 
-  // Simulate payment processing
   try {
     await new Promise(resolve => setTimeout(resolve, 2000))
 
-    // Save total before clearing cart
     orderTotal.value = getTotalPrice()
 
     const newOrderId = "ORD-" + Date.now()
@@ -118,7 +114,7 @@ async function processPayment() {
       items: cart.value,
       totalPrice: orderTotal.value,
       totalQuantity: cart.value.reduce((sum, item) => sum + item.quantity, 0),
-      paymentMethod: paymentMethod,
+      paymentMethod,
       status: "completed" as const,
       createdAt: new Date().toISOString(),
       shippingAddress: {
@@ -131,13 +127,7 @@ async function processPayment() {
 
     addOrder(order)
     orderId.value = newOrderId
-    
-    // Clear cart BEFORE showing success to ensure it's empty
-    console.log("Cart before clear:", cart.value.length)
     clearCart()
-    console.log("Cart after clear:", cart.value.length)
-    console.log("LocalStorage cart:", localStorage.getItem("cart"))
-    
     paymentSuccess.value = true
   } catch (e) {
     error.value = "Payment processing failed. Please try again."
@@ -153,181 +143,163 @@ function continueShopping() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
-    <div class="max-w-2xl mx-auto">
-      <!-- Success State -->
-      <div v-if="paymentSuccess" class="text-center">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-          <div class="text-6xl mb-4">✅</div>
-          <h1 class="text-3xl font-bold mb-4">Payment Successful!</h1>
-          <p class="text-gray-600 dark:text-gray-400 mb-6">
-            Thank you for your order
-          </p>
+  <div class="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 px-4 py-10 text-slate-950 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
+    <div class="mx-auto max-w-5xl">
+      <div v-if="paymentSuccess" class="rounded-[40px] border border-cyan-200/60 bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-10 text-center text-white shadow-2xl shadow-sky-500/20 dark:border-slate-800 dark:bg-none dark:bg-slate-950">
+        <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-white/15 text-3xl font-extrabold">
+          OK
+        </div>
+        <h1 class="mb-3 text-4xl font-extrabold">Payment Successful</h1>
+        <p class="mb-8 text-slate-100">Thank you for your order.</p>
 
-          <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8 text-left">
-            <div class="mb-4">
-              <p class="text-sm text-gray-600 dark:text-gray-400">Order ID</p>
-              <p class="text-lg font-bold">{{ orderId }}</p>
+        <div class="mx-auto mb-8 max-w-2xl rounded-[28px] bg-white/15 p-6 text-left">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p class="text-sm text-slate-200">Order ID</p>
+              <p class="font-bold text-white">{{ orderId }}</p>
             </div>
-
-            <div class="mb-4">
-              <p class="text-sm text-gray-600 dark:text-gray-400">Order Date</p>
-              <p class="text-lg font-bold">{{ new Date().toLocaleDateString() }}</p>
+            <div>
+              <p class="text-sm text-slate-200">Order Date</p>
+              <p class="font-bold text-white">{{ new Date().toLocaleDateString() }}</p>
             </div>
-
-            <div class="mb-4">
-              <p class="text-sm text-gray-600 dark:text-gray-400">Shipping Address</p>
-              <p class="text-lg font-bold">
-                {{ address }}<br>
-                {{ city }}, {{ postalCode }}<br>
-                {{ country }}
-              </p>
-            </div>
-
-            <div class="mb-4">
-              <p class="text-sm text-gray-600 dark:text-gray-400">Payment Method</p>
-              <p class="text-lg font-bold">
+            <div>
+              <p class="text-sm text-slate-200">Payment Method</p>
+              <p class="font-bold text-white">
                 {{ paymentMethod === "card" ? "Credit/Debit Card" : "Cash on Delivery" }}
               </p>
             </div>
-
-            <div class="pt-4 border-t border-gray-300 dark:border-gray-600">
-              <p class="text-sm text-gray-600 dark:text-gray-400">Order Total</p>
-              <p class="text-2xl font-bold">${{ orderTotal.toFixed(2) }}</p>
+            <div>
+              <p class="text-sm text-slate-200">Order Total</p>
+              <p class="font-bold text-white">${{ orderTotal.toFixed(2) }}</p>
             </div>
           </div>
-
-          <div class="space-y-4">
-            <button
-              @click="continueShopping"
-              class="w-full px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition"
-            >
-              Continue Shopping
-            </button>
+          <div class="mt-5 border-t border-white/20 pt-5">
+            <p class="text-sm text-slate-200">Shipping Address</p>
+            <p class="font-bold text-white">
+              {{ address }}, {{ city }}, {{ postalCode }}, {{ country }}
+            </p>
           </div>
         </div>
+
+        <button
+          @click="continueShopping"
+          class="rounded-3xl bg-white px-8 py-4 font-bold text-slate-950 shadow-lg shadow-slate-950/20 transition hover:bg-slate-100"
+        >
+          Continue Shopping
+        </button>
       </div>
 
-      <!-- Payment Form -->
       <div v-else>
-        <h1 class="text-3xl font-bold mb-8">Payment</h1>
+        <div class="mb-8 rounded-[36px] border border-slate-300/60 bg-slate-400/35 p-8 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
+          <p class="mb-3 text-sm font-semibold uppercase tracking-[0.28em] text-slate-700 dark:text-slate-400">
+            Final step
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-slate-950 dark:text-white">
+            Payment
+          </h1>
+        </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-          <div v-if="error" class="mb-6 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded">
+        <div class="rounded-[40px] border border-slate-300/60 bg-slate-400/35 p-8 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
+          <div v-if="error" class="mb-6 rounded-2xl bg-rose-100 p-4 text-rose-700 dark:bg-rose-900/50 dark:text-rose-200">
             {{ error }}
           </div>
 
-          <!-- Card Payment Form -->
           <div v-if="paymentMethod === 'card'">
-            <h2 class="text-xl font-bold mb-6">Card Details</h2>
+            <h2 class="mb-6 text-2xl font-extrabold text-slate-950 dark:text-white">Card Details</h2>
 
-            <!-- Card Preview -->
-            <div class="mb-8 perspective">
-              <div class="bg-gradient-to-br from-blue-600 to-blue-900 rounded-lg shadow-xl p-8 text-white min-h-52 relative overflow-hidden">
-                <!-- Decorative circles -->
-                <div class="absolute top-4 right-4 w-12 h-12 border-2 border-blue-300 rounded-full opacity-50"></div>
-                <div class="absolute bottom-4 right-8 w-20 h-20 border-2 border-blue-400 rounded-full opacity-30"></div>
+            <div class="mb-8 rounded-[32px] bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-8 text-white shadow-2xl shadow-sky-500/20">
+              <div class="mb-10 flex items-start justify-between">
+                <div>
+                  <p class="mb-2 text-sm text-sky-100">Card Number</p>
+                  <p class="font-mono text-2xl tracking-[0.18em]">
+                    {{ cardNumber || "0000 0000 0000 0000" }}
+                  </p>
+                </div>
+                <div class="h-14 w-14 rounded-full border-2 border-white/30"></div>
+              </div>
 
-                <!-- Card content -->
-                <div class="relative z-10">
-                  <div class="mb-8">
-                    <p class="text-sm text-blue-200 mb-1">Card Number</p>
-                    <p class="text-2xl font-mono tracking-widest">
-                      {{ cardNumber || '•••• •••• •••• ••••' }}
-                    </p>
-                  </div>
-
-                  <div class="flex justify-between items-end">
-                    <div>
-                      <p class="text-xs text-blue-200 mb-1">Card Holder</p>
-                      <p class="text-lg font-semibold uppercase">
-                        {{ cardHolder || 'YOUR NAME' }}
-                      </p>
-                    </div>
-                    <div class="text-right">
-                      <p class="text-xs text-blue-200 mb-1">Expires</p>
-                      <p class="text-lg font-mono">
-                        {{ expiryDate || 'MM/YY' }}
-                      </p>
-                    </div>
-                  </div>
+              <div class="flex justify-between gap-6">
+                <div>
+                  <p class="mb-2 text-xs text-sky-100">Card Holder</p>
+                  <p class="text-lg font-bold uppercase">{{ cardHolder || "YOUR NAME" }}</p>
+                </div>
+                <div class="text-right">
+                  <p class="mb-2 text-xs text-sky-100">Expires</p>
+                  <p class="font-mono text-lg">{{ expiryDate || "MM/YY" }}</p>
                 </div>
               </div>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">Dummy card for testing - will not be charged</p>
             </div>
 
-            <!-- Card Form -->
-            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
+            <p class="mb-8 text-center text-xs font-medium text-slate-600 dark:text-slate-400">
+              Dummy card for testing - will not be charged
+            </p>
+
+            <div class="mb-6 rounded-[32px] bg-gradient-to-br from-sky-50 via-cyan-50 to-blue-100 p-6 dark:bg-none dark:bg-slate-950">
               <div class="mb-4">
-                <label class="block text-sm font-medium mb-2">Card Number</label>
+                <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Card Number</label>
                 <input
                   v-model="cardNumber"
                   type="text"
                   placeholder="1234 5678 9012 3456"
                   maxlength="19"
                   @input="onCardNumberInput"
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  class="w-full rounded-3xl border border-slate-300/70 bg-white px-5 py-4 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 />
               </div>
 
               <div class="mb-4">
-                <label class="block text-sm font-medium mb-2">Card Holder Name</label>
+                <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Card Holder Name</label>
                 <input
                   v-model="cardHolder"
                   type="text"
                   placeholder="John Doe"
-                  class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  class="w-full rounded-3xl border border-slate-300/70 bg-white px-5 py-4 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 />
               </div>
 
-              <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label class="block text-sm font-medium mb-2">Expiry Date</label>
+                  <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Expiry Date</label>
                   <input
                     v-model="expiryDate"
                     type="text"
                     placeholder="MM/YY"
                     maxlength="5"
                     @input="onExpiryDateInput"
-                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-3xl border border-slate-300/70 bg-white px-5 py-4 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium mb-2">CVV</label>
+                  <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">CVV</label>
                   <input
                     v-model="cvv"
                     type="text"
                     placeholder="123"
                     maxlength="3"
-                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-3xl border border-slate-300/70 bg-white px-5 py-4 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                   />
                 </div>
               </div>
-
             </div>
           </div>
 
-          <!-- Cash on Delivery -->
-          <div v-else>
-            <div class="p-6 bg-blue-50 dark:bg-blue-900 rounded-lg mb-6">
-              <h2 class="text-lg font-bold mb-2">Cash on Delivery</h2>
-              <p class="text-gray-700 dark:text-gray-300">
-                You will pay <strong>${{ getTotalPrice().toFixed(2) }}</strong> when the order is delivered.
-              </p>
-            </div>
+          <div v-else class="mb-6 rounded-[32px] bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-8 text-white shadow-2xl shadow-sky-500/20">
+            <h2 class="mb-3 text-2xl font-extrabold">Cash on Delivery</h2>
+            <p class="text-slate-100">
+              You will pay <strong>${{ getTotalPrice().toFixed(2) }}</strong> when the order is delivered.
+            </p>
           </div>
 
-          <!-- Order Summary -->
-          <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
-            <h3 class="text-lg font-bold mb-4">Order Summary</h3>
-            <div class="space-y-2 mb-4">
-              <div v-for="item in cart" :key="item.id" class="flex justify-between text-sm">
+          <div class="mb-6 rounded-[32px] bg-white/70 p-6 shadow-sm dark:bg-slate-950">
+            <h3 class="mb-4 text-xl font-extrabold text-slate-950 dark:text-white">Order Summary</h3>
+            <div class="mb-4 space-y-2">
+              <div v-for="item in cart" :key="item.id" class="flex justify-between gap-3 text-sm text-slate-700 dark:text-slate-300">
                 <span>{{ item.title }} (x{{ item.quantity }})</span>
-                <span>${{ (item.price * item.quantity).toFixed(2) }}</span>
+                <span class="font-semibold">${{ (item.price * item.quantity).toFixed(2) }}</span>
               </div>
             </div>
-            <div class="pt-4 border-t border-gray-300 dark:border-gray-600 flex justify-between font-bold text-lg">
-              <span>Total:</span>
+            <div class="flex justify-between border-t border-slate-300 pt-4 text-lg font-extrabold text-slate-950 dark:border-slate-800 dark:text-white">
+              <span>Total</span>
               <span>${{ getTotalPrice().toFixed(2) }}</span>
             </div>
           </div>
@@ -335,14 +307,14 @@ function continueShopping() {
           <div class="flex gap-4">
             <router-link
               to="/checkout"
-              class="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-center font-medium"
+              class="flex-1 rounded-3xl border border-slate-300/70 bg-white/80 px-6 py-4 text-center font-bold text-slate-800 shadow-sm transition hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-white"
             >
               Back
             </router-link>
             <button
               @click="processPayment"
               :disabled="loading"
-              class="flex-1 px-6 py-3 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white rounded-lg transition font-medium"
+              class="flex-1 rounded-3xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-4 font-bold text-white shadow-lg shadow-sky-500/20 transition hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-400 disabled:to-slate-500"
             >
               {{ loading ? "Processing..." : `Pay $${getTotalPrice().toFixed(2)}` }}
             </button>
