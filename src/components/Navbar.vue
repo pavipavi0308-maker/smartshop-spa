@@ -40,15 +40,15 @@ function navigateTo(path: string) {
 </script>
 
 <template>
-  <header class="sticky top-4 z-40 mx-4 rounded-3xl bg-gradient-to-r from-blue-500 via-sky-400 to-slate-900/70 border border-slate-200/60 shadow-sm backdrop-blur-md dark:bg-slate-950/95 dark:border-slate-800">
+  <header class="sticky top-4 z-40 mx-4 mt-4 rounded-3xl bg-gradient-to-r from-blue-500 via-sky-400 to-slate-900/70 border border-slate-200/60 shadow-sm backdrop-blur-md dark:bg-slate-950/95 dark:border-slate-800">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3 cursor-pointer" @click="navigateTo('/')">
         <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md">
           <span class="text-lg">S</span>
         </div>
         <div>
-          <p class="text-lg font-semibold text-slate-900 dark:text-white">SmartShop</p>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Shop smarter, faster</p>
+          <p class="text-lg font-semibold text-white drop-shadow-sm dark:text-white">SmartShop</p>
+          <p class="text-xs font-medium text-white/85 drop-shadow-sm dark:text-slate-300">Shop smarter, faster</p>
         </div>
       </div>
 
@@ -88,13 +88,13 @@ function navigateTo(path: string) {
           <div v-else class="flex items-center gap-2">
             <router-link
               to="/login"
-              class="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+              class="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
             >
               Login
             </router-link>
             <router-link
               to="/register"
-              class="rounded-2xl bg-slate-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-600"
+              class="rounded-2xl bg-slate-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-600"
             >
               Sign Up
             </router-link>

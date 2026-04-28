@@ -79,8 +79,8 @@ onMounted(async () => {
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 text-slate-900 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
-    <div class="mx-auto px-5 py-8 md:px-8">
-      <section class="grid gap-8 rounded-[40px] bg-gradient-to-r from-slate-100/90 via-slate-50 to-cyan-100 p-8 text-slate-900 shadow-2xl shadow-slate-900/10 lg:grid-cols-[1.4fr_1fr] border border-slate-200/60 dark:bg-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100 dark:shadow-slate-950/30">
+    <div class="mx-auto px-5 py-10 md:px-8">
+      <section class="grid gap-8 rounded-[40px] border border-slate-300/60 bg-slate-400/35 p-8 text-slate-900 shadow-2xl shadow-slate-900/10 lg:grid-cols-[1.4fr_1fr] dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100 dark:shadow-slate-950/30">
         <div class="hero-left-panel space-y-6 rounded-4xl border border-cyan-200/60 bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-6 text-white shadow-xl shadow-sky-500/20 lg:p-8 dark:border-slate-800 dark:bg-none dark:bg-slate-950 dark:shadow-slate-950/30">
           <span class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm dark:bg-slate-800 dark:text-slate-100 dark:border dark:border-slate-700">
             <span class="h-2.5 w-2.5 rounded-full bg-sky-600"></span>
