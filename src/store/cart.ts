@@ -44,13 +44,28 @@ function decreaseQuantity(id: number) {
   localStorage.setItem("cart", JSON.stringify(cart.value))
 }
 
-  
+function getTotalPrice(): number {
+  return cart.value.reduce((total, item) => total + (item.price * item.quantity), 0)
+}
+
+function clearCart() {
+  cart.value = []
+  localStorage.removeItem("cart")
+}
+
+function reloadCart() {
+  const savedCart = localStorage.getItem("cart")
+  cart.value = savedCart ? JSON.parse(savedCart) : []
+}
 
   return {
   cart,
   addToCart,
   removeFromCart,
   increaseQuantity,
-  decreaseQuantity
+  decreaseQuantity,
+  getTotalPrice,
+  clearCart,
+  reloadCart
   }
 }
