@@ -70,77 +70,85 @@ function handleKeyup(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
-    <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-lg shadow-md p-8">
-      <h1 class="text-3xl font-bold text-center mb-8">Login</h1>
-
-      <div v-if="error" class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded">
-        {{ error }}
-      </div>
-
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-2">Username</label>
-        <input
-          v-model="username"
-          type="text"
-          placeholder="Enter username"
-          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          @keyup="handleKeyup"
-        />
-      </div>
-
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2">Password</label>
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Enter password"
-          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          @keyup="handleKeyup"
-        />
-      </div>
-
-      <button
-        @click="handleLogin"
-        :disabled="loading"
-        class="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
-      >
-        {{ loading ? "Logging in..." : "Login" }}
-      </button>
-
-      <div class="mt-6 pt-6 border-t border-gray-300 dark:border-gray-600">
-        <p class="text-sm font-medium text-center mb-4">Demo Credentials:</p>
-        <div class="space-y-2">
-          <button
-            v-for="cred in demoCredentials"
-            :key="cred.username"
-            @click="useDemoCredentials(cred)"
-            class="w-full text-left px-3 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-sm transition"
-          >
-            <div class="font-medium">{{ cred.name }}</div>
-            <div class="text-xs text-gray-600 dark:text-gray-400">@{{ cred.username }}</div>
-          </button>
+  <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 px-4 py-10 dark:bg-none dark:bg-slate-800">
+    <div class="grid w-full max-w-5xl overflow-hidden rounded-[40px] border border-slate-300/60 bg-slate-400/35 shadow-2xl shadow-slate-900/10 lg:grid-cols-[0.9fr_1.1fr] dark:border-slate-800 dark:bg-slate-900">
+      <div class="hidden bg-gradient-to-br from-blue-500 via-cyan-500 to-slate-800 p-10 text-white lg:flex lg:flex-col lg:justify-between">
+        <div>
+          <p class="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky-100/80">SmartShop</p>
+          <h2 class="text-4xl font-extrabold leading-tight">Shop smarter after one quick sign in.</h2>
+          <p class="mt-5 text-slate-100">Keep your cart, checkout faster, and continue where you left off.</p>
+        </div>
+        <div class="rounded-[28px] bg-white/15 p-5">
+          <p class="font-semibold">Demo users are ready below</p>
+          <p class="mt-2 text-sm text-slate-100">Pick a saved account and jump straight back to shopping.</p>
         </div>
       </div>
 
-      <p class="text-center mt-6 text-gray-600 dark:text-gray-400">
-        Don't have an account?
-        <router-link
-          to="/register"
-          class="text-blue-500 hover:text-blue-600 font-medium"
-        >
-          Sign up here
-        </router-link>
-      </p>
+      <div class="bg-gradient-to-br from-sky-50 via-cyan-50 to-blue-100 p-8 dark:bg-none dark:bg-slate-950/90">
+        <h1 class="mb-8 text-center text-3xl font-extrabold text-slate-950 dark:text-white">Login</h1>
 
-      <p class="text-center mt-4 text-gray-600 dark:text-gray-400">
-        <router-link
-          to="/"
-          class="text-blue-500 hover:text-blue-600 font-medium"
+        <div v-if="error" class="mb-4 rounded-2xl bg-rose-100 p-4 text-rose-700 dark:bg-rose-900/50 dark:text-rose-200">
+          {{ error }}
+        </div>
+
+        <div class="mb-4">
+          <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Username</label>
+          <input
+            v-model="username"
+            type="text"
+            placeholder="Enter username"
+            class="w-full rounded-3xl border border-slate-300/70 bg-white px-5 py-4 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+            @keyup="handleKeyup"
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Password</label>
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Enter password"
+            class="w-full rounded-3xl border border-slate-300/70 bg-white px-5 py-4 text-slate-950 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+            @keyup="handleKeyup"
+          />
+        </div>
+
+        <button
+          @click="handleLogin"
+          :disabled="loading"
+          class="w-full rounded-3xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-4 font-bold text-white shadow-lg shadow-sky-500/20 transition hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-400 disabled:to-slate-500"
         >
-          Continue as Guest
-        </router-link>
-      </p>
+          {{ loading ? "Logging in..." : "Login" }}
+        </button>
+
+        <div class="mt-6 border-t border-slate-300/70 pt-6 dark:border-slate-800">
+          <p class="mb-4 text-center text-sm font-semibold text-slate-800 dark:text-slate-200">Demo Credentials</p>
+          <div class="space-y-2">
+            <button
+              v-for="cred in demoCredentials"
+              :key="cred.username"
+              @click="useDemoCredentials(cred)"
+              class="w-full rounded-2xl bg-white/80 px-4 py-3 text-left text-sm shadow-sm ring-1 ring-sky-200 transition hover:bg-white dark:bg-slate-900 dark:ring-slate-800 dark:hover:bg-slate-800"
+            >
+              <div class="font-semibold text-slate-950 dark:text-white">{{ cred.name }}</div>
+              <div class="text-xs text-slate-600 dark:text-slate-400">@{{ cred.username }}</div>
+            </button>
+          </div>
+        </div>
+
+        <p class="mt-6 text-center text-slate-600 dark:text-slate-400">
+          Don't have an account?
+          <router-link to="/register" class="font-semibold text-blue-600 hover:text-blue-700 dark:text-cyan-300">
+            Sign up here
+          </router-link>
+        </p>
+
+        <p class="mt-4 text-center text-slate-600 dark:text-slate-400">
+          <router-link to="/" class="font-semibold text-blue-600 hover:text-blue-700 dark:text-cyan-300">
+            Continue as Guest
+          </router-link>
+        </p>
+      </div>
     </div>
   </div>
 </template>
