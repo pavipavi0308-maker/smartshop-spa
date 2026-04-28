@@ -31,7 +31,7 @@ async function loadMore() {
   }
 }
 
-const categories = ["all", "beauty", "fragrances"]
+const categories = ["all", "beauty", "fragrances", "furniture", "groceries"]
 
 const filteredProducts = computed(() => {
 
@@ -159,15 +159,15 @@ onMounted(async () => {
         </div>
       </section>
 
-      <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <div class="mt-10 flex flex-wrap justify-center gap-3 rounded-4xl border border-slate-300/40 bg-slate-400/25 px-4 py-5 shadow-xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
         <button
           v-for="cat in categories"
           :key="cat"
           @click="selectedCategory = cat"
           class="rounded-full px-6 py-3 text-sm font-semibold transition duration-200"
           :class="selectedCategory === cat
-            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20 dark:bg-sky-500 dark:shadow-sky-500/20'
-            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700'"
+            ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-sky-500/30 dark:from-blue-500 dark:to-cyan-400'
+            : 'bg-white/85 text-slate-800 border border-white/70 shadow-sm hover:bg-white dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700'"
         >
           {{ cat }}
         </button>
@@ -178,13 +178,13 @@ onMounted(async () => {
         <p class="mt-4 text-slate-500 text-lg">Loading amazing products...</p>
       </div>
 
-      <section v-if="!loading && topDeals.length > 0" class="mt-12 rounded-4xl bg-white/90 border border-slate-200 p-8 shadow-2xl shadow-slate-200/40 dark:border-slate-700 dark:bg-slate-900/90">
+      <section v-if="!loading && topDeals.length > 0" class="mt-12 rounded-4xl border border-slate-300/60 bg-slate-400/35 p-8 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
         <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Top Deals</h2>
-            <p class="text-slate-500 dark:text-slate-400">Handpicked discounts for you</p>
+            <h2 class="text-3xl font-bold text-slate-950 dark:text-slate-100">Top Deals</h2>
+            <p class="text-slate-700 dark:text-slate-400">Handpicked discounts for you</p>
           </div>
-          <span class="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 dark:bg-slate-800 dark:text-slate-100">Best values</span>
+          <span class="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 dark:from-slate-800 dark:to-slate-700">Best values</span>
         </div>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -192,13 +192,13 @@ onMounted(async () => {
         </div>
       </section>
 
-      <section v-if="filteredProducts.length > 0" class="mt-12 rounded-4xl bg-white/90 border border-slate-200 p-8 shadow-2xl shadow-slate-200/40 dark:border-slate-700 dark:bg-slate-900/90">
+      <section v-if="filteredProducts.length > 0" class="mt-12 rounded-4xl border border-slate-300/60 bg-slate-400/35 p-8 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
         <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">All Products</h2>
-            <p class="text-slate-500 dark:text-slate-400">Showing {{ filteredProducts.length }} items</p>
+            <h2 class="text-3xl font-bold text-slate-950 dark:text-slate-100">All Products</h2>
+            <p class="text-slate-700 dark:text-slate-400">Showing {{ filteredProducts.length }} items</p>
           </div>
-          <div class="text-sm text-slate-500 dark:text-slate-400">Browse the latest collection with smart sorting and filtering.</div>
+          <div class="rounded-full bg-white/70 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm dark:bg-slate-800 dark:text-slate-300">Browse the latest collection with smart sorting and filtering.</div>
         </div>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
