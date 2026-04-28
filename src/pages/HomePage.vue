@@ -79,127 +79,129 @@ onMounted(async () => {
 
 <template>
 
-<div class="p-5">
+<div class="min-h-screen bg-gray-50 p-5">
 
-  <h1 class="text-2xl font-bold mb-4">Products</h1>
+  <div class="max-w-7xl mx-auto">
 
-  <!-- Search + Sort -->
-  <div class="flex flex-wrap items-center gap-4 mb-6">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">Discover Amazing Products</h1>
+      <p class="text-gray-600">Find the best deals and latest trends</p>
+    </div>
 
-    <input
-      v-model="search"
-      placeholder="Search products..."
-      class="border p-2 rounded w-72 outline-none focus:ring-2 focus:ring-blue-500"
-    />
+    <!-- Search + Sort -->
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-wrap items-center gap-4">
 
-    <select
-      v-model="sortOrder"
-      class="border p-2 rounded cursor-pointer"
-    >
-      <option value="default">Sort by Price</option>
-      <option value="low">Price: Low → High</option>
-      <option value="high">Price: High → Low</option>
-    </select>
-
-  </div>
-
-
-  <!-- Category Buttons -->
-  <div class="flex gap-2 mb-6 flex-wrap">
-
-    <button
-      v-for="cat in categories"
-      :key="cat"
-      @click="selectedCategory = cat"
-      class="px-4 py-2 rounded capitalize transition-colors"
-      :class="selectedCategory === cat
-        ? 'bg-black text-white'
-        : 'bg-gray-200 text-black hover:bg-gray-300'"
-    >
-      {{ cat }}
-    </button>
-
-  </div>
-
-
-  <!-- Loading -->
-  <div v-if="loading" class="flex flex-col items-center mt-10">
-
-    <div class="loader"></div>
-
-    <p class="mt-3 text-gray-500">
-      Loading products...
-    </p>
-
-  </div>
-
-
-  <!-- Top Deals -->
-  <h2 class="text-xl font-bold mb-4 mt-6">
-    🔥 Top Deals
-  </h2>
-
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
-
-    <ProductCard
-      v-for="product in topDeals"
-      :key="product.id"
-      :product="product"
-    />
-
-  </div>
-
-
-  <!-- Products -->
-  <template v-if="filteredProducts.length > 0">
-
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-    >
-
-      <ProductCard
-        v-for="product in filteredProducts"
-        :key="product.id"
-        :product="product"
+      <input
+        v-model="search"
+        placeholder="Search products..."
+        class="flex-1 border border-gray-300 p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
+
+      <select
+        v-model="sortOrder"
+        class="border border-gray-300 p-3 rounded-lg cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      >
+        <option value="default">Sort by Price</option>
+        <option value="low">Price: Low → High</option>
+        <option value="high">Price: High → Low</option>
+      </select>
 
     </div>
 
-  </template>
+    <!-- Category Buttons -->
+    <div class="flex gap-3 mb-8 flex-wrap justify-center">
 
+      <button
+        v-for="cat in categories"
+        :key="cat"
+        @click="selectedCategory = cat"
+        class="px-6 py-3 rounded-full capitalize transition-all duration-200 font-medium"
+        :class="selectedCategory === cat
+          ? 'bg-blue-600 text-white shadow-md'
+          : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'"
+      >
+        {{ cat }}
+      </button>
 
-  <!-- No Products -->
-  <div
-    v-else
-    class="text-center py-10 text-gray-500"
-  >
+    </div>
 
-    <p class="text-xl">
-      No products found for "{{ search }}"
-    </p>
+    <!-- Loading -->
+    <div v-if="loading" class="flex flex-col items-center mt-20">
 
-    <button
-      @click="search = ''; selectedCategory = 'all'"
-      class="text-blue-500 underline mt-2"
+      <div class="loader"></div>
+
+      <p class="mt-4 text-gray-500 text-lg">
+        Loading amazing products...
+      </p>
+
+    </div>
+
+    <!-- Top Deals -->
+    <section v-if="!loading && topDeals.length > 0" class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <span class="text-red-500">🔥</span> Top Deals
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <ProductCard
+          v-for="product in topDeals"
+          :key="product.id"
+          :product="product"
+        />
+
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section v-if="filteredProducts.length > 0" class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">All Products</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+
+        <ProductCard
+          v-for="product in filteredProducts"
+          :key="product.id"
+          :product="product"
+        />
+
+      </div>
+    </section>
+
+    <!-- No Products -->
+    <div
+      v-else-if="!loading"
+      class="text-center py-20 bg-white rounded-lg shadow-sm"
     >
-      Clear all filters
-    </button>
 
-  </div>
+      <p class="text-xl text-gray-500 mb-4">
+        No products found for "{{ search }}"
+      </p>
 
+      <button
+        @click="search = ''; selectedCategory = 'all'"
+        class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+      >
+        Clear Filters
+      </button>
 
-  <!-- Load More -->
-  <div
-    v-if="hasMore"
-    class="flex justify-end mt-10"
-  >
+    </div>
 
-    <button
-      @click="loadMore"
-      class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+    <!-- Load More -->
+    <div
+      v-if="hasMore && !loading"
+      class="flex justify-center mt-12"
     >
-      Load More
-    </button>
+
+      <button
+        @click="loadMore"
+        class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-8 py-3 rounded-full hover:from-red-600 hover:to-pink-600 transition shadow-lg font-medium"
+      >
+        Load More Products
+      </button>
+
+    </div>
 
   </div>
 
