@@ -22,9 +22,16 @@ onMounted(async () => {
 
 function handleAddToCart() {
   if (!isAuthenticated.value) {
-    router.push("/login")
+    router.push({
+      path: "/login",
+      query: {
+        redirect: route.fullPath,
+        addToCart: String(product.value?.id)
+      }
+    })
     return
   }
+
   addToCart(product.value!)
   addedToCart.value = true
   setTimeout(() => {
@@ -34,97 +41,108 @@ function handleAddToCart() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4">
-    <div class="max-w-6xl mx-auto">
+  <div class="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 px-4 py-10 text-slate-950 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
+    <div class="mx-auto max-w-7xl">
       <button
         @click="$router.push('/')"
-        class="mb-8 px-4 py-2 text-blue-500 hover:text-blue-600 font-medium transition"
+        class="mb-8 rounded-full border border-cyan-200/60 bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:from-blue-700 hover:to-cyan-600 dark:border-slate-800 dark:from-slate-900 dark:to-slate-800"
       >
-        ← Back to Products
+        Back to Products
       </button>
 
-      <div v-if="product" class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <!-- Images Section -->
-        <div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+      <div v-if="product" class="grid grid-cols-1 gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="rounded-[36px] border border-slate-300/60 bg-slate-400/35 p-6 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
+          <div class="mb-5 rounded-[28px] border border-white/70 bg-white p-6 shadow-xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-950">
             <img
               :src="selectedImage"
               :alt="product.title"
-              class="w-full h-96 object-contain rounded"
+              class="h-[420px] w-full rounded-3xl object-contain"
             />
           </div>
 
-          <div class="flex gap-3 overflow-x-auto">
+          <div class="flex gap-3 overflow-x-auto pb-1">
             <img
               v-for="img in product.images"
               :key="img"
               :src="img"
               @click="selectedImage = img"
               :class="[
-                'w-20 h-20 object-cover rounded cursor-pointer border-2 transition',
+                'h-20 w-20 cursor-pointer rounded-2xl border-2 bg-white object-cover p-1 shadow-sm transition',
                 selectedImage === img
-                  ? 'border-blue-500'
-                  : 'border-gray-300 dark:border-gray-600 hover:border-blue-400'
+                  ? 'border-cyan-400 ring-4 ring-cyan-300/30'
+                  : 'border-white/70 hover:border-cyan-300 dark:border-slate-700'
               ]"
             />
           </div>
         </div>
 
-        <!-- Product Info Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wide">
+        <div class="rounded-[36px] border border-cyan-200/60 bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-8 text-white shadow-2xl shadow-sky-500/20 dark:border-slate-800 dark:bg-none dark:bg-slate-950 dark:shadow-slate-950/30">
+          <p class="mb-3 text-sm uppercase tracking-[0.3em] text-sky-100/80">
             {{ product.category }}
           </p>
 
-          <h1 class="text-4xl font-bold mb-4">{{ product.title }}</h1>
+          <h1 class="mb-5 text-4xl font-extrabold tracking-tight">
+            {{ product.title }}
+          </h1>
 
-          <div class="flex items-center gap-2 mb-4">
-            <span class="text-2xl">⭐</span>
-            <span class="text-lg font-medium">{{ product.rating }}/5</span>
+          <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold shadow-sm">
+            <span>Rating</span>
+            <span>{{ product.rating }}/5</span>
           </div>
 
-          <div class="mb-6 pb-6 border-b border-gray-300 dark:border-gray-600">
-            <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">Price</p>
-            <p class="text-4xl font-bold text-red-500">${{ product.price.toFixed(2) }}</p>
-            <p v-if="product.discountPercentage" class="text-sm text-green-600 mt-2">
+          <div class="mb-6 rounded-[28px] border border-white/10 bg-white/15 p-5">
+            <p class="mb-2 text-sm font-medium text-slate-100">Price</p>
+            <p class="text-4xl font-extrabold text-white">
+              ${{ product.price.toFixed(2) }}
+            </p>
+            <p v-if="product.discountPercentage" class="mt-2 text-sm font-semibold text-emerald-100">
               Save {{ product.discountPercentage }}%
             </p>
           </div>
 
-          <div class="mb-6">
-            <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">Availability</p>
-            <p v-if="product.stock > 0" class="text-green-600 font-medium">
-              ✓ In Stock ({{ product.stock }} items available)
+          <div class="mb-6 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-[24px] border border-white/10 bg-white/15 p-4">
+              <p class="mb-2 text-sm font-medium text-slate-100">Availability</p>
+              <p v-if="product.stock > 0" class="font-semibold text-white">
+                In Stock ({{ product.stock }} available)
+              </p>
+              <p v-else class="font-semibold text-rose-100">Out of Stock</p>
+            </div>
+            <div class="rounded-[24px] border border-white/10 bg-white/15 p-4">
+              <p class="mb-2 text-sm font-medium text-slate-100">Brand</p>
+              <p class="font-semibold text-white">
+                {{ product.brand || "SmartShop" }}
+              </p>
+            </div>
+          </div>
+
+          <div class="mb-8 rounded-[28px] bg-white/10 p-5">
+            <p class="text-sm leading-7 text-slate-100">
+              {{ product.description }}
             </p>
-            <p v-else class="text-red-600 font-medium">Out of Stock</p>
           </div>
 
-          <div class="mb-8">
-            <p class="text-gray-600 dark:text-gray-400 text-sm mb-3">Brand</p>
-            <p class="text-lg font-medium">{{ product.brand }}</p>
-          </div>
-
-          <div class="space-y-4 mb-8">
+          <div class="mb-8 space-y-4">
             <button
               @click="handleAddToCart"
               :disabled="product.stock === 0"
-              class="w-full px-6 py-4 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white rounded-lg font-bold text-lg transition"
+              class="w-full rounded-3xl bg-white px-6 py-4 text-lg font-bold text-slate-950 shadow-lg shadow-slate-950/20 transition hover:bg-slate-100 disabled:bg-slate-400"
             >
-              {{ addedToCart ? "✓ Added to Cart!" : "Add to Cart" }}
+              {{ addedToCart ? "Added to Cart!" : "Add to Cart" }}
             </button>
 
             <router-link
               to="/cart"
-              class="block w-full px-6 py-4 border-2 border-blue-500 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-lg font-bold text-center transition"
+              class="block w-full rounded-3xl border border-white/40 px-6 py-4 text-center text-lg font-bold text-white transition hover:bg-white/10"
             >
               View Cart
             </router-link>
           </div>
 
-          <div v-if="!isAuthenticated" class="p-4 bg-blue-50 dark:bg-blue-900 rounded-lg">
-            <p class="text-sm text-blue-700 dark:text-blue-200">
+          <div v-if="!isAuthenticated" class="rounded-3xl bg-white/15 p-4">
+            <p class="text-sm text-slate-100">
               You need to
-              <router-link to="/login" class="font-bold underline hover:no-underline">
+              <router-link to="/login" class="font-bold underline underline-offset-4 hover:no-underline">
                 login
               </router-link>
               to add items to your cart
@@ -133,10 +151,9 @@ function handleAddToCart() {
         </div>
       </div>
 
-      <!-- Description Section -->
-      <div v-if="product" class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-        <h2 class="text-2xl font-bold mb-4">Description</h2>
-        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+      <div v-if="product" class="mt-8 rounded-[36px] border border-slate-300/60 bg-slate-400/35 p-8 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
+        <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-white">Description</h2>
+        <p class="leading-8 text-slate-700 dark:text-slate-300">
           {{ product.description }}
         </p>
       </div>

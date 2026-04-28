@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { useRouter } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { useAuth } from "../store/auth"
+import { useCart } from "../store/cart"
 import { login } from "../services/api"
+import type { Product } from "../types/product"
 
+const route = useRoute()
 const router = useRouter()
 const { setAuth } = useAuth()
+const { addToCart } = useCart()
 
 const username = ref("")
 const password = ref("")
@@ -33,7 +37,18 @@ async function handleLogin() {
       password: password.value
     })
     setAuth(response)
-    router.push("/")
+
+    const addToCartId = Number(route.query.addToCart)
+    if (Number.isFinite(addToCartId) && addToCartId > 0) {
+      const productResponse = await fetch(`https://dummyjson.com/products/${addToCartId}`)
+      const product = await productResponse.json() as Product
+      addToCart(product)
+      router.push("/cart")
+      return
+    }
+
+    const redirect = typeof route.query.redirect === "string" ? route.query.redirect : "/"
+    router.push(redirect)
   } catch (e) {
     error.value = "Invalid credentials. Please try again."
     console.error(e)
