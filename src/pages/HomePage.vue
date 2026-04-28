@@ -82,38 +82,38 @@ onMounted(async () => {
     <div class="mx-auto px-5 py-8 md:px-8">
       <section class="grid gap-8 rounded-[40px] bg-gradient-to-r from-slate-100/90 via-slate-50 to-cyan-100 p-8 text-slate-900 shadow-2xl shadow-slate-900/10 lg:grid-cols-[1.4fr_1fr] border border-slate-200/60 dark:bg-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100 dark:shadow-slate-950/30">
         <div class="hero-left-panel space-y-6 rounded-4xl border border-cyan-200/60 bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-6 text-white shadow-xl shadow-sky-500/20 lg:p-8 dark:border-slate-800 dark:bg-none dark:bg-slate-950 dark:shadow-slate-950/30">
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm dark:bg-slate-800 dark:text-slate-100 dark:border dark:border-slate-700">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm dark:bg-slate-800 dark:text-slate-100 dark:border dark:border-slate-700">
             <span class="h-2.5 w-2.5 rounded-full bg-sky-600"></span>
             Smart Shop for modern shopping
           </span>
 
           <div class="space-y-4">
             <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Discover products you’ll love — faster.</h1>
-            <p class="max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">Browse expertly curated deals, compare prices instantly, and shop smarter with our clean, effortless storefront.</p>
+            <p class="max-w-2xl text-lg leading-8 text-slate-100 dark:text-slate-300">Browse expertly curated deals, compare prices instantly, and shop smarter with our clean, effortless storefront.</p>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-[28px] bg-sky-50/90 p-5 shadow-sm backdrop-blur-sm border border-slate-200/70 dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
-              <p class="text-sm uppercase tracking-[0.24em] text-slate-700 dark:text-slate-400">24/7 support</p>
-              <p class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">Here to help anytime.</p>
+            <div class="rounded-[28px] border border-white/10 bg-white/15 p-5 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">24/7 support</p>
+              <p class="mt-3 text-base font-semibold text-white dark:text-slate-100">Here to help anytime.</p>
             </div>
-            <div class="rounded-[28px] bg-sky-50/90 p-5 shadow-sm backdrop-blur-sm border border-slate-200/70 dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
-              <p class="text-sm uppercase tracking-[0.24em] text-slate-700 dark:text-slate-400">Fast shipping</p>
-              <p class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">Delivered quickly to your door.</p>
+            <div class="rounded-[28px] border border-white/10 bg-white/15 p-5 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-200 dark:text-slate-400">Fast shipping</p>
+              <p class="mt-3 text-base font-semibold text-white dark:text-slate-100">Delivered quickly to your door.</p>
             </div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-[1.25fr_0.75fr]">
-            <div class="rounded-[28px] border border-slate-200/70 bg-sky-50/90 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
-              <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-400">Search products</label>
+            <div class="rounded-[28px] border border-white/10 bg-white/15 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <label class="mb-2 block text-sm font-medium text-slate-100 dark:text-slate-400">Search products</label>
               <input
                 v-model="search"
                 placeholder="Search products..."
                 class="w-full rounded-3xl border border-slate-300/70 bg-white/90 px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
               />
             </div>
-            <div class="rounded-[28px] border border-slate-200/70 bg-sky-50/90 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
-              <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-400">Sort by price</label>
+            <div class="rounded-[28px] border border-white/10 bg-white/15 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <label class="mb-2 block text-sm font-medium text-slate-100 dark:text-slate-400">Sort by price</label>
               <select
                 v-model="sortOrder"
                 class="w-full cursor-pointer rounded-3xl border border-slate-300/70 bg-white/90 px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
@@ -234,28 +234,6 @@ onMounted(async () => {
 
 
 <style scoped>
-
-.hero-left-panel .text-slate-600,
-.hero-left-panel .text-slate-700,
-.hero-left-panel .text-slate-900 {
-  color: #fff !important;
-}
-
-.hero-left-panel .grid > div {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-.hero-left-panel label,
-.hero-left-panel .uppercase {
-  color: rgb(226 232 240) !important;
-}
-
-.hero-left-panel input,
-.hero-left-panel select {
-  background: rgba(255, 255, 255, 0.92) !important;
-  color: rgb(15 23 42) !important;
-}
 
 .loader {
   width: 44px;
