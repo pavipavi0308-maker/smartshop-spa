@@ -78,114 +78,153 @@ onMounted(async () => {
 
 
 <template>
+  <div class="min-h-screen bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div class="max-w-7xl mx-auto px-5 py-8 md:px-8">
+      <section class="grid gap-8 rounded-[40px] border border-slate-200 bg-white/90 p-8 shadow-2xl shadow-slate-200/40 backdrop-blur-sm lg:grid-cols-[1.4fr_1fr] dark:border-slate-700 dark:bg-slate-900/90">
+        <div class="space-y-6">
+          <span class="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 dark:bg-slate-800 dark:text-slate-100">
+            <span class="h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+            Smart Shop for modern shopping
+          </span>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-100 via-white to-sky-50 p-5">
+          <div class="space-y-4">
+            <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Discover products you’ll love — faster.</h1>
+            <p class="max-w-2xl text-lg leading-8 text-slate-600">Browse expertly curated deals, compare prices instantly, and shop smarter with our clean, effortless storefront.</p>
+          </div>
 
-  <div class="max-w-7xl mx-auto">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-[28px] bg-slate-50 p-5 shadow-sm dark:bg-slate-800">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">24/7 support</p>
+              <p class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">Here to help anytime.</p>
+            </div>
+            <div class="rounded-[28px] bg-slate-50 p-5 shadow-sm dark:bg-slate-800">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Fast shipping</p>
+              <p class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">Delivered quickly to your door.</p>
+            </div>
+          </div>
 
-    <section class="rounded-[32px] bg-white/90 border border-slate-200 shadow-2xl shadow-slate-200/40 backdrop-blur-sm p-8 mb-10">
-      <div class="text-center max-w-3xl mx-auto">
-        <p class="text-sm uppercase tracking-[0.4em] text-blue-600 mb-4">Smart Shop</p>
-        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-4">Discover products you’ll love</h1>
-        <p class="text-lg leading-8 text-slate-600">Explore top deals, filter by category, and shop smarter with a cleaner product experience.</p>
-      </div>
-
-      <div class="mt-10 grid gap-4 lg:grid-cols-[1.6fr_0.9fr] items-center">
-        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-          <input
-            v-model="search"
-            placeholder="Search products..."
-            class="w-full border border-transparent bg-transparent p-4 rounded-3xl outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-800"
-          />
+          <div class="grid gap-4 sm:grid-cols-[1.25fr_0.75fr]">
+            <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <label class="mb-2 block text-sm font-medium text-slate-600 dark:text-slate-400">Search products</label>
+              <input
+                v-model="search"
+                placeholder="Search products..."
+                class="w-full rounded-3xl border border-slate-200 bg-white px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              />
+            </div>
+            <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <label class="mb-2 block text-sm font-medium text-slate-600 dark:text-slate-400">Sort by price</label>
+              <select
+                v-model="sortOrder"
+                class="w-full cursor-pointer rounded-3xl border border-slate-200 bg-white px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              >
+                <option value="default">Default</option>
+                <option value="low">Low → High</option>
+                <option value="high">High → Low</option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <select
-          v-model="sortOrder"
-          class="w-full border border-slate-200 bg-white p-4 rounded-3xl cursor-pointer shadow-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        <div class="space-y-4 rounded-4xl bg-linear-to-br from-sky-600 via-blue-600 to-indigo-700 p-8 text-white shadow-xl shadow-sky-500/20">
+          <div class="space-y-3">
+            <p class="text-sm uppercase tracking-[0.3em] text-sky-100/80">Featured benefits</p>
+            <h2 class="text-3xl font-semibold tracking-tight">Get the best deals every day</h2>
+            <p class="text-slate-100/90">Our homepage helps you find top discounts, trusted products, and a fast checkout flow without distraction.</p>
+          </div>
+
+          <div class="space-y-4 rounded-[28px] bg-white/10 p-5">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">✓</span>
+              <div>
+                <p class="font-semibold">Easy browsing</p>
+                <p class="text-sm text-slate-200/80">Search, filter, and sort in seconds.</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">⚡</span>
+              <div>
+                <p class="font-semibold">Curated deals</p>
+                <p class="text-sm text-slate-200/80">Top discounts selected for you.</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">💳</span>
+              <div>
+                <p class="font-semibold">Secure checkout</p>
+                <p class="text-sm text-slate-200/80">Safe payments every time.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <button
+          v-for="cat in categories"
+          :key="cat"
+          @click="selectedCategory = cat"
+          class="rounded-full px-6 py-3 text-sm font-semibold transition duration-200"
+          :class="selectedCategory === cat
+            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700'"
         >
-          <option value="default">Sort by Price</option>
-          <option value="low">Price: Low → High</option>
-          <option value="high">Price: High → Low</option>
-        </select>
+          {{ cat }}
+        </button>
       </div>
-    </section>
 
-    <div class="flex flex-wrap justify-center gap-4 mb-10">
-      <button
-        v-for="cat in categories"
-        :key="cat"
-        @click="selectedCategory = cat"
-        class="px-7 py-3 rounded-full capitalize text-sm font-semibold transition-all duration-200"
-        :class="selectedCategory === cat
-          ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-          : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'"
-      >
-        {{ cat }}
-      </button>
-    </div>
+      <div v-if="loading" class="flex flex-col items-center justify-center py-24">
+        <div class="loader"></div>
+        <p class="mt-4 text-slate-500 text-lg">Loading amazing products...</p>
+      </div>
 
-    <div v-if="loading" class="flex flex-col items-center mt-20">
-      <div class="loader"></div>
-      <p class="mt-4 text-slate-500 text-lg">Loading amazing products...</p>
-    </div>
-
-    <section v-if="!loading && topDeals.length > 0" class="mb-12">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <div>
-          <h2 class="text-3xl font-bold text-slate-900">Top Deals</h2>
-          <p class="text-slate-500">Handpicked discounts for you</p>
+      <section v-if="!loading && topDeals.length > 0" class="mt-12 rounded-4xl bg-white/90 border border-slate-200 p-8 shadow-2xl shadow-slate-200/40 dark:border-slate-700 dark:bg-slate-900/90">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Top Deals</h2>
+            <p class="text-slate-500 dark:text-slate-400">Handpicked discounts for you</p>
+          </div>
+          <span class="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 dark:bg-slate-800 dark:text-slate-100">Best values</span>
         </div>
-        <span class="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">Best values</span>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ProductCard v-for="product in topDeals" :key="product.id" :product="product" />
+        </div>
+      </section>
+
+      <section v-if="filteredProducts.length > 0" class="mt-12 rounded-4xl bg-white/90 border border-slate-200 p-8 shadow-2xl shadow-slate-200/40 dark:border-slate-700 dark:bg-slate-900/90">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">All Products</h2>
+            <p class="text-slate-500 dark:text-slate-400">Showing {{ filteredProducts.length }} items</p>
+          </div>
+          <div class="text-sm text-slate-500 dark:text-slate-400">Browse the latest collection with smart sorting and filtering.</div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+          <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
+        </div>
+      </section>
+
+      <div v-else-if="!loading" class="mt-12 rounded-4xl bg-white/90 border border-slate-200 p-10 text-center shadow-2xl shadow-slate-200/40 dark:border-slate-700 dark:bg-slate-900/90">
+        <p class="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4">No products found for "{{ search }}"</p>
+        <p class="text-slate-500 dark:text-slate-400 mb-8">Try another search term or reset filters to explore more items.</p>
+        <button
+          @click="search = ''; selectedCategory = 'all'"
+          class="inline-flex rounded-full bg-blue-600 px-8 py-3 text-white transition hover:bg-blue-700"
+        >
+          Clear Filters
+        </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <ProductCard
-          v-for="product in topDeals"
-          :key="product.id"
-          :product="product"
-        />
+      <div v-if="hasMore && !loading" class="mt-10 flex justify-center">
+        <button
+          @click="loadMore"
+          class="rounded-full bg-linear-to-r from-red-500 to-pink-500 px-10 py-4 text-white shadow-2xl shadow-pink-500/20 transition hover:from-red-600 hover:to-pink-600"
+        >
+          Load More Products
+        </button>
       </div>
-    </section>
-
-    <section v-if="filteredProducts.length > 0" class="mb-12">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <h2 class="text-3xl font-bold text-slate-900">All Products</h2>
-        <p class="text-slate-500">Showing {{ filteredProducts.length }} items</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        <ProductCard
-          v-for="product in filteredProducts"
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-    </section>
-
-    <div
-      v-else-if="!loading"
-      class="text-center py-20 bg-white rounded-[28px] shadow-lg border border-slate-200"
-    >
-      <p class="text-xl text-slate-500 mb-4">No products found for "{{ search }}"</p>
-      <button
-        @click="search = ''; selectedCategory = 'all'"
-        class="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition shadow-lg"
-      >
-        Clear Filters
-      </button>
-    </div>
-
-    <div
-      v-if="hasMore && !loading"
-      class="flex justify-center mt-12"
-    >
-      <button
-        @click="loadMore"
-        class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-10 py-4 rounded-full hover:from-red-600 hover:to-pink-600 transition shadow-2xl shadow-pink-500/20 font-semibold"
-      >
-        Load More Products
-      </button>
-    </div>
 
   </div>
 
@@ -197,11 +236,11 @@ onMounted(async () => {
 <style scoped>
 
 .loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(148, 163, 184, 0.35);
+  border-top-color: #2563eb;
+  border-radius: 9999px;
   animation: spin 1s linear infinite;
 }
 
