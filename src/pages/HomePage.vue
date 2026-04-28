@@ -9,7 +9,6 @@ const search = ref("")
 const selectedCategory = ref("all")
 const sortOrder = ref("default")
 const loading = ref(true)
-const showPopup = ref(false)
 
 const skip = ref(0)
 const hasMore = ref(true)
@@ -74,10 +73,6 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-
-  setTimeout(() => {
-    showPopup.value = true
-  }, 900)
 })
 </script>
 
@@ -85,37 +80,8 @@ onMounted(async () => {
 <template>
   <div class="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 text-slate-900 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
     <div class="mx-auto px-5 py-8 md:px-8">
-      <div
-        v-if="showPopup"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-6 backdrop-blur-sm"
-      >
-        <div class="w-full max-w-xl rounded-4xl bg-white p-6 shadow-2xl shadow-slate-900/20 dark:bg-slate-900 dark:text-slate-100">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Special popup</p>
-              <h2 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">Welcome to SmartShop</h2>
-              <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Enjoy a quick popup message as a test. Use the button below to close it and continue browsing.</p>
-            </div>
-            <button
-              @click="showPopup = false"
-              class="rounded-full border border-slate-200 bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-            >
-              Close
-            </button>
-          </div>
-          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-            <button
-              @click="showPopup = false"
-              class="rounded-3xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      </div>
-
       <section class="grid gap-8 rounded-[40px] bg-gradient-to-r from-slate-100/90 via-slate-50 to-cyan-100 p-8 text-slate-900 shadow-2xl shadow-slate-900/10 lg:grid-cols-[1.4fr_1fr] border border-slate-200/60 dark:bg-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100 dark:shadow-slate-950/30">
-        <div class="space-y-6 rounded-4xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-900/10 lg:p-8 dark:border-slate-800 dark:bg-slate-950 dark:shadow-slate-950/30">
+        <div class="hero-left-panel space-y-6 rounded-4xl border border-cyan-200/60 bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-6 text-white shadow-xl shadow-sky-500/20 lg:p-8 dark:border-slate-800 dark:bg-none dark:bg-slate-950 dark:shadow-slate-950/30">
           <span class="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm dark:bg-slate-800 dark:text-slate-100 dark:border dark:border-slate-700">
             <span class="h-2.5 w-2.5 rounded-full bg-sky-600"></span>
             Smart Shop for modern shopping
@@ -268,6 +234,28 @@ onMounted(async () => {
 
 
 <style scoped>
+
+.hero-left-panel .text-slate-600,
+.hero-left-panel .text-slate-700,
+.hero-left-panel .text-slate-900 {
+  color: #fff !important;
+}
+
+.hero-left-panel .grid > div {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.hero-left-panel label,
+.hero-left-panel .uppercase {
+  color: rgb(226 232 240) !important;
+}
+
+.hero-left-panel input,
+.hero-left-panel select {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: rgb(15 23 42) !important;
+}
 
 .loader {
   width: 44px;
