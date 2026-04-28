@@ -26,7 +26,7 @@ function navigateTo(path: string) {
 </script>
 
 <template>
-  <header class="sticky top-0 z-40 rounded-b-3xl bg-white/95 dark:bg-slate-950/95 border-b border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-md">
+  <header class="sticky top-4 z-40 mx-4 rounded-3xl bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-200 border border-slate-200 shadow-sm backdrop-blur-md dark:bg-slate-950 dark:border-slate-800">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3 cursor-pointer" @click="navigateTo('/')">
         <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md">
