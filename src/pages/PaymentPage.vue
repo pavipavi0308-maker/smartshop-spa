@@ -223,7 +223,7 @@ function continueShopping() {
 
             <!-- Card Preview -->
             <div class="mb-8 perspective">
-              <div class="bg-gradient-to-br from-blue-600 to-blue-900 rounded-lg shadow-xl p-8 text-white min-h-52 relative overflow-hidden">
+              <div class="bg-linear-to-br from-blue-600 to-blue-900 rounded-lg shadow-xl p-8 text-white min-h-52 relative overflow-hidden">
                 <!-- Decorative circles -->
                 <div class="absolute top-4 right-4 w-12 h-12 border-2 border-blue-300 rounded-full opacity-50"></div>
                 <div class="absolute bottom-4 right-8 w-20 h-20 border-2 border-blue-400 rounded-full opacity-30"></div>
