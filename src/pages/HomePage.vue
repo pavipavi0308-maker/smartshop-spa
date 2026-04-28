@@ -9,6 +9,7 @@ const search = ref("")
 const selectedCategory = ref("all")
 const sortOrder = ref("default")
 const loading = ref(true)
+const showPopup = ref(false)
 
 const skip = ref(0)
 const hasMore = ref(true)
@@ -73,50 +74,83 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+
+  setTimeout(() => {
+    showPopup.value = true
+  }, 900)
 })
 </script>
 
 
 <template>
-  <div class="min-h-screen bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-    <div class="max-w-7xl mx-auto px-5 py-8 md:px-8">
-      <section class="grid gap-8 rounded-[40px] border border-slate-200 bg-white/90 p-8 shadow-2xl shadow-slate-200/40 backdrop-blur-sm lg:grid-cols-[1.4fr_1fr] dark:border-slate-700 dark:bg-slate-900/90">
-        <div class="space-y-6">
-          <span class="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 dark:bg-slate-800 dark:text-slate-100">
-            <span class="h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+  <div class="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 text-slate-900 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
+    <div class="mx-auto px-5 py-8 md:px-8">
+      <div
+        v-if="showPopup"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-6 backdrop-blur-sm"
+      >
+        <div class="w-full max-w-xl rounded-4xl bg-white p-6 shadow-2xl shadow-slate-900/20 dark:bg-slate-900 dark:text-slate-100">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Special popup</p>
+              <h2 class="mt-3 text-2xl font-semibold text-slate-900 dark:text-white">Welcome to SmartShop</h2>
+              <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Enjoy a quick popup message as a test. Use the button below to close it and continue browsing.</p>
+            </div>
+            <button
+              @click="showPopup = false"
+              class="rounded-full border border-slate-200 bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+            >
+              Close
+            </button>
+          </div>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+            <button
+              @click="showPopup = false"
+              class="rounded-3xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <section class="grid gap-8 rounded-[40px] bg-gradient-to-r from-slate-100/90 via-slate-50 to-cyan-100 p-8 text-slate-900 shadow-2xl shadow-slate-900/10 lg:grid-cols-[1.4fr_1fr] border border-slate-200/60 dark:bg-none dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100 dark:shadow-slate-950/30">
+        <div class="space-y-6 rounded-4xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-900/10 lg:p-8 dark:border-slate-800 dark:bg-slate-950 dark:shadow-slate-950/30">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm dark:bg-slate-800 dark:text-slate-100 dark:border dark:border-slate-700">
+            <span class="h-2.5 w-2.5 rounded-full bg-sky-600"></span>
             Smart Shop for modern shopping
           </span>
 
           <div class="space-y-4">
             <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Discover products you’ll love — faster.</h1>
-            <p class="max-w-2xl text-lg leading-8 text-slate-600">Browse expertly curated deals, compare prices instantly, and shop smarter with our clean, effortless storefront.</p>
+            <p class="max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">Browse expertly curated deals, compare prices instantly, and shop smarter with our clean, effortless storefront.</p>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-[28px] bg-slate-50 p-5 shadow-sm dark:bg-slate-800">
-              <p class="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">24/7 support</p>
+            <div class="rounded-[28px] bg-sky-50/90 p-5 shadow-sm backdrop-blur-sm border border-slate-200/70 dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-700 dark:text-slate-400">24/7 support</p>
               <p class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">Here to help anytime.</p>
             </div>
-            <div class="rounded-[28px] bg-slate-50 p-5 shadow-sm dark:bg-slate-800">
-              <p class="text-sm uppercase tracking-[0.24em] text-slate-500 dark:text-slate-400">Fast shipping</p>
+            <div class="rounded-[28px] bg-sky-50/90 p-5 shadow-sm backdrop-blur-sm border border-slate-200/70 dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-700 dark:text-slate-400">Fast shipping</p>
               <p class="mt-3 text-base font-semibold text-slate-900 dark:text-slate-100">Delivered quickly to your door.</p>
             </div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-[1.25fr_0.75fr]">
-            <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-              <label class="mb-2 block text-sm font-medium text-slate-600 dark:text-slate-400">Search products</label>
+            <div class="rounded-[28px] border border-slate-200/70 bg-sky-50/90 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-400">Search products</label>
               <input
                 v-model="search"
                 placeholder="Search products..."
-                class="w-full rounded-3xl border border-slate-200 bg-white px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                class="w-full rounded-3xl border border-slate-300/70 bg-white/90 px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
               />
             </div>
-            <div class="rounded-[28px] border border-slate-200 bg-slate-50 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-              <label class="mb-2 block text-sm font-medium text-slate-600 dark:text-slate-400">Sort by price</label>
+            <div class="rounded-[28px] border border-slate-200/70 bg-sky-50/90 p-4 shadow-sm backdrop-blur-sm dark:bg-slate-700 dark:border-slate-700 dark:text-slate-100">
+              <label class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-400">Sort by price</label>
               <select
                 v-model="sortOrder"
-                class="w-full cursor-pointer rounded-3xl border border-slate-200 bg-white px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                class="w-full cursor-pointer rounded-3xl border border-slate-300/70 bg-white/90 px-5 py-4 text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
               >
                 <option value="default">Default</option>
                 <option value="low">Low → High</option>
@@ -126,7 +160,7 @@ onMounted(async () => {
           </div>
         </div>
 
-        <div class="space-y-4 rounded-4xl bg-linear-to-br from-sky-600 via-blue-600 to-indigo-700 p-8 text-white shadow-xl shadow-sky-500/20">
+        <div class="space-y-4 rounded-4xl bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-8 text-white shadow-xl shadow-sky-500/20 dark:bg-none dark:bg-slate-950 dark:shadow-none">
           <div class="space-y-3">
             <p class="text-sm uppercase tracking-[0.3em] text-sky-100/80">Featured benefits</p>
             <h2 class="text-3xl font-semibold tracking-tight">Get the best deals every day</h2>
@@ -166,7 +200,7 @@ onMounted(async () => {
           @click="selectedCategory = cat"
           class="rounded-full px-6 py-3 text-sm font-semibold transition duration-200"
           :class="selectedCategory === cat
-            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+            ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20 dark:bg-sky-500 dark:shadow-sky-500/20'
             : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700'"
         >
           {{ cat }}
@@ -220,7 +254,7 @@ onMounted(async () => {
       <div v-if="hasMore && !loading" class="mt-10 flex justify-center">
         <button
           @click="loadMore"
-          class="rounded-full bg-linear-to-r from-red-500 to-pink-500 px-10 py-4 text-white shadow-2xl shadow-pink-500/20 transition hover:from-red-600 hover:to-pink-600"
+          class="rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-10 py-4 text-white shadow-2xl shadow-pink-500/20 transition hover:from-red-600 hover:to-pink-600"
         >
           Load More Products
         </button>

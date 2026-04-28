@@ -26,7 +26,7 @@ function goToProduct() {
       />
       <span
         v-if="props.product.discountPercentage"
-        class="absolute left-4 top-4 rounded-full bg-linear-to-r from-red-500 to-pink-500 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-red-500/20"
+        class="absolute left-4 top-4 rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white shadow-lg shadow-red-500/20"
       >
         -{{ Math.round(props.product.discountPercentage) }}%
       </span>

@@ -2,15 +2,29 @@
 import { useCart } from "../store/cart"
 import { useRouter } from "vue-router"
 import { useAuth } from "../store/auth"
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 
 const { cart } = useCart()
 const { isAuthenticated, user, logout } = useAuth()
 const router = useRouter()
 const showProfileMenu = ref(false)
+const isDarkMode = ref(false)
+
+onMounted(() => {
+  const savedMode = localStorage.getItem("smartshop-dark-mode")
+  if (savedMode === "true" || (!savedMode && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    isDarkMode.value = true
+    document.documentElement.classList.add("dark")
+  } else {
+    isDarkMode.value = false
+    document.documentElement.classList.remove("dark")
+  }
+})
 
 function toggleDarkMode() {
-  document.documentElement.classList.toggle("dark")
+  isDarkMode.value = !isDarkMode.value
+  document.documentElement.classList.toggle("dark", isDarkMode.value)
+  localStorage.setItem("smartshop-dark-mode", String(isDarkMode.value))
 }
 
 function handleLogout() {
@@ -26,10 +40,10 @@ function navigateTo(path: string) {
 </script>
 
 <template>
-  <header class="sticky top-4 z-40 mx-4 rounded-3xl bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-200 border border-slate-200 shadow-sm backdrop-blur-md dark:bg-slate-950 dark:border-slate-800">
+  <header class="sticky top-4 z-40 mx-4 rounded-3xl bg-gradient-to-r from-blue-500 via-sky-400 to-slate-900/70 border border-slate-200/60 shadow-sm backdrop-blur-md dark:bg-slate-950/95 dark:border-slate-800">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
       <div class="flex items-center gap-3 cursor-pointer" @click="navigateTo('/')">
-        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md">
           <span class="text-lg">S</span>
         </div>
         <div>
@@ -44,7 +58,7 @@ function navigateTo(path: string) {
           class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
         >
           <span>🌙</span>
-          <span class="hidden sm:inline">Dark Mode</span>
+          <span class="hidden sm:inline">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
         </button>
 
         <button
@@ -53,7 +67,7 @@ function navigateTo(path: string) {
         >
           <span class="text-lg">🛒</span>
           <span>Cart</span>
-          <span class="rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">{{ cart.length }}</span>
+          <span class="rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-semibold text-white">{{ cart.length }}</span>
         </button>
 
         <div class="relative">
@@ -74,13 +88,13 @@ function navigateTo(path: string) {
           <div v-else class="flex items-center gap-2">
             <router-link
               to="/login"
-              class="rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+              class="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
             >
               Login
             </router-link>
             <router-link
               to="/register"
-              class="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
+              class="rounded-2xl bg-slate-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-600"
             >
               Sign Up
             </router-link>
