@@ -13,6 +13,61 @@ const loading = ref(true)
 const skip = ref(0)
 const hasMore = ref(true)
 
+const fallbackProducts: Product[] = [
+  {
+    id: 1001,
+    title: "Essence Mascara Lash Princess",
+    description: "A lightweight mascara with bold definition for everyday looks.",
+    price: 9.99,
+    discountPercentage: 12,
+    rating: 4.8,
+    stock: 42,
+    brand: "Essence",
+    category: "beauty",
+    thumbnail: "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+    images: []
+  },
+  {
+    id: 1002,
+    title: "Chanel Coco Noir Eau De",
+    description: "A rich fragrance with a polished, long-lasting finish.",
+    price: 129.99,
+    discountPercentage: 18,
+    rating: 4.4,
+    stock: 16,
+    brand: "Chanel",
+    category: "fragrances",
+    thumbnail: "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/thumbnail.webp",
+    images: []
+  },
+  {
+    id: 1003,
+    title: "Annibale Colombo Bed",
+    description: "A modern bed frame designed for a calm, refined bedroom.",
+    price: 1899.99,
+    discountPercentage: 11,
+    rating: 4.7,
+    stock: 8,
+    brand: "Annibale Colombo",
+    category: "furniture",
+    thumbnail: "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/thumbnail.webp",
+    images: []
+  },
+  {
+    id: 1004,
+    title: "Fresh Mangoes",
+    description: "Sweet, juicy mangoes picked for fresh daily snacking.",
+    price: 12.99,
+    discountPercentage: 15,
+    rating: 4.6,
+    stock: 64,
+    brand: "Fresh Farms",
+    category: "groceries",
+    thumbnail: "https://cdn.dummyjson.com/product-images/groceries/mangoes/thumbnail.webp",
+    images: []
+  }
+]
+
 async function loadMore() {
   skip.value += 20
 
@@ -27,7 +82,7 @@ async function loadMore() {
     products.value.push(...more)
 
   } catch (error) {
-    console.error("Failed to load more products:", error)
+    hasMore.value = false
   }
 }
 
@@ -67,9 +122,12 @@ const topDeals = computed(() => {
 
 onMounted(async () => {
   try {
-    products.value = await fetchProducts()
+    const fetchedProducts = await fetchProducts()
+    products.value = fetchedProducts.length > 0 ? fetchedProducts : fallbackProducts
+    hasMore.value = fetchedProducts.length > 0
   } catch (error) {
-    console.error("Failed to load products:", error)
+    products.value = fallbackProducts
+    hasMore.value = false
   } finally {
     loading.value = false
   }
@@ -78,10 +136,10 @@ onMounted(async () => {
 
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-100 to-indigo-100 text-slate-900 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
+  <div class="min-h-screen bg-linear-to-br from-sky-100 via-cyan-100 to-indigo-100 text-slate-900 dark:bg-none dark:bg-slate-800 dark:text-slate-100">
     <div class="mx-auto px-5 py-10 md:px-8">
       <section class="grid gap-8 rounded-[40px] border border-slate-300/60 bg-slate-400/35 p-8 text-slate-900 shadow-2xl shadow-slate-900/10 lg:grid-cols-[1.4fr_1fr] dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100 dark:shadow-slate-950/30">
-        <div class="hero-left-panel space-y-6 rounded-4xl border border-cyan-200/60 bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-6 text-white shadow-xl shadow-sky-500/20 lg:p-8 dark:border-slate-800 dark:bg-none dark:bg-slate-950 dark:shadow-slate-950/30">
+        <div class="hero-left-panel space-y-6 rounded-4xl border border-cyan-200/60 bg-linear-to-br from-blue-600 via-cyan-500 to-slate-900 p-6 text-white shadow-xl shadow-sky-500/20 lg:p-8 dark:border-slate-800 dark:bg-none dark:bg-slate-950 dark:shadow-slate-950/30">
           <span class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm backdrop-blur-sm dark:bg-slate-800 dark:text-slate-100 dark:border dark:border-slate-700">
             <span class="h-2.5 w-2.5 rounded-full bg-sky-600"></span>
             Smart Shop for modern shopping
@@ -126,7 +184,7 @@ onMounted(async () => {
           </div>
         </div>
 
-        <div class="space-y-4 rounded-4xl bg-gradient-to-br from-blue-600 via-cyan-500 to-slate-900 p-8 text-white shadow-xl shadow-sky-500/20 dark:bg-none dark:bg-slate-950 dark:shadow-none">
+        <div class="space-y-4 rounded-4xl bg-linear-to-br from-blue-600 via-cyan-500 to-slate-900 p-8 text-white shadow-xl shadow-sky-500/20 dark:bg-none dark:bg-slate-950 dark:shadow-none">
           <div class="space-y-3">
             <p class="text-sm uppercase tracking-[0.3em] text-sky-100/80">Featured benefits</p>
             <h2 class="text-3xl font-semibold tracking-tight">Get the best deals every day</h2>
@@ -166,7 +224,7 @@ onMounted(async () => {
           @click="selectedCategory = cat"
           class="rounded-full px-6 py-3 text-sm font-semibold transition duration-200"
           :class="selectedCategory === cat
-            ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-sky-500/30 dark:from-blue-500 dark:to-cyan-400'
+            ? 'bg-linear-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-sky-500/30 dark:from-blue-500 dark:to-cyan-400'
             : 'bg-white/85 text-slate-800 border border-white/70 shadow-sm hover:bg-white dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700'"
         >
           {{ cat }}
@@ -184,7 +242,7 @@ onMounted(async () => {
             <h2 class="text-3xl font-bold text-slate-950 dark:text-slate-100">Top Deals</h2>
             <p class="text-slate-700 dark:text-slate-400">Handpicked discounts for you</p>
           </div>
-          <span class="rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 dark:from-slate-800 dark:to-slate-700">Best values</span>
+          <span class="rounded-full bg-linear-to-r from-blue-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 dark:from-slate-800 dark:to-slate-700">Best values</span>
         </div>
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -220,7 +278,7 @@ onMounted(async () => {
       <div v-if="hasMore && !loading" class="mt-10 flex justify-center">
         <button
           @click="loadMore"
-          class="rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-10 py-4 text-white shadow-2xl shadow-pink-500/20 transition hover:from-red-600 hover:to-pink-600"
+          class="rounded-full bg-linear-to-r from-red-500 to-pink-500 px-10 py-4 text-white shadow-2xl shadow-pink-500/20 transition hover:from-red-600 hover:to-pink-600"
         >
           Load More Products
         </button>
