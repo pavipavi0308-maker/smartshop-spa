@@ -2,8 +2,20 @@ import { ref } from "vue"
 import type { Product } from "../types/product"
 type CartItem = Product & { quantity: number }
 
-const savedCart = localStorage.getItem("cart")
-const cart = ref<CartItem[]>(savedCart ? JSON.parse(savedCart) : [])
+function readCart(): CartItem[] {
+  const savedCart = localStorage.getItem("cart")
+  if (!savedCart) return []
+
+  try {
+    const parsed: unknown = JSON.parse(savedCart)
+    return Array.isArray(parsed) ? parsed as CartItem[] : []
+  } catch {
+    localStorage.removeItem("cart")
+    return []
+  }
+}
+
+const cart = ref<CartItem[]>(readCart())
 
 
 export function useCart() {
@@ -54,8 +66,7 @@ function clearCart() {
 }
 
 function reloadCart() {
-  const savedCart = localStorage.getItem("cart")
-  cart.value = savedCart ? JSON.parse(savedCart) : []
+  cart.value = readCart()
 }
 
   return {

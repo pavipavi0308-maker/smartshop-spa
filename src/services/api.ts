@@ -18,7 +18,15 @@ interface LocalUser {
 
 function getLocalUsers(): LocalUser[] {
   const stored = localStorage.getItem("registered_users")
-  return stored ? JSON.parse(stored) : []
+  if (!stored) return []
+
+  try {
+    const users: unknown = JSON.parse(stored)
+    return Array.isArray(users) ? users as LocalUser[] : []
+  } catch {
+    localStorage.removeItem("registered_users")
+    return []
+  }
 }
 
 function saveLocalUser(user: Omit<LocalUser, 'id'>): LocalUser {
@@ -41,12 +49,14 @@ function userExists(username: string): boolean {
 
 export async function fetchProducts(skip = 0): Promise<Product[]> {
   const res = await fetch(`${API_BASE}/products?limit=20&skip=${skip}`)
+  if (!res.ok) throw new Error("Unable to load products.")
   const data = await res.json()
-  return data.products
+  return Array.isArray(data.products) ? data.products : []
 }
 
 export async function fetchProductById(id: number): Promise<Product> {
   const res = await fetch(`${API_BASE}/products/${id}`)
+  if (!res.ok) throw new Error("Unable to load this product.")
   const data = await res.json()
   return data
 }

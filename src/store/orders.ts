@@ -1,7 +1,20 @@
 import { ref } from "vue"
 import type { Order } from "../types/order"
 
-const orders = ref<Order[]>(JSON.parse(localStorage.getItem("orders") || "[]"))
+function readOrders(): Order[] {
+  const savedOrders = localStorage.getItem("orders")
+  if (!savedOrders) return []
+
+  try {
+    const parsed: unknown = JSON.parse(savedOrders)
+    return Array.isArray(parsed) ? parsed as Order[] : []
+  } catch {
+    localStorage.removeItem("orders")
+    return []
+  }
+}
+
+const orders = ref<Order[]>(readOrders())
 
 export function useOrders() {
   function addOrder(order: Order) {

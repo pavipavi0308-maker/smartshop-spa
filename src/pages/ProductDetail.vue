@@ -4,6 +4,7 @@ import { ref, onMounted } from "vue"
 import type { Product } from "../types/product"
 import { useCart } from "../store/cart"
 import { useAuth } from "../store/auth"
+import { fetchProductById } from "../services/api"
 
 const route = useRoute()
 const router = useRouter()
@@ -12,15 +13,26 @@ const { addToCart } = useCart()
 const { isAuthenticated } = useAuth()
 const selectedImage = ref("")
 const addedToCart = ref(false)
+const error = ref("")
 
 onMounted(async () => {
-  const res = await fetch(`https://dummyjson.com/products/${route.params.id}`)
-  const data = await res.json()
-  product.value = data
-  selectedImage.value = data.thumbnail
+  const id = Number(route.params.id)
+  if (!Number.isInteger(id) || id <= 0) {
+    error.value = "This product could not be found."
+    return
+  }
+
+  try {
+    product.value = await fetchProductById(id)
+    selectedImage.value = product.value.thumbnail
+  } catch {
+    error.value = "We couldn't load this product. Please try again later."
+  }
 })
 
 function handleAddToCart() {
+  if (!product.value) return
+
   if (!isAuthenticated.value) {
     router.push({
       path: "/login",
@@ -32,7 +44,7 @@ function handleAddToCart() {
     return
   }
 
-  addToCart(product.value!)
+  addToCart(product.value)
   addedToCart.value = true
   setTimeout(() => {
     addedToCart.value = false
@@ -149,6 +161,13 @@ function handleAddToCart() {
             </p>
           </div>
         </div>
+      </div>
+
+      <div v-else-if="error" class="rounded-[36px] border border-rose-200 bg-rose-50 p-8 text-center shadow-xl dark:border-rose-900/50 dark:bg-rose-950/30">
+        <p class="text-lg font-semibold text-rose-700 dark:text-rose-200">{{ error }}</p>
+        <router-link to="/" class="mt-5 inline-block rounded-2xl bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700">
+          Back to Products
+        </router-link>
       </div>
 
       <div v-if="product" class="mt-8 rounded-[36px] border border-slate-300/60 bg-slate-400/35 p-8 shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">

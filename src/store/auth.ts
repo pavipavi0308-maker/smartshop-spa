@@ -44,19 +44,24 @@ export function useAuth() {
     
     if (savedToken && savedUser) {
       try {
-        const user = JSON.parse(savedUser)
+        const user: User = JSON.parse(savedUser)
         
         // Validate local users against registered_users in localStorage
         if (savedToken.startsWith("local_token_")) {
           const registeredUsers = localStorage.getItem("registered_users")
-          if (registeredUsers) {
-            const users = JSON.parse(registeredUsers)
-            const userExists = users.some((u: { username: string }) => u.username === user.username)
-            
-            if (!userExists) {
-              logout()
-              return
-            }
+          if (!registeredUsers) {
+            logout()
+            return
+          }
+
+          const users: unknown = JSON.parse(registeredUsers)
+          const userExists = Array.isArray(users) && users.some(
+            (registeredUser: { username?: unknown }) => registeredUser.username === user.username
+          )
+
+          if (!userExists) {
+            logout()
+            return
           }
         }
         
