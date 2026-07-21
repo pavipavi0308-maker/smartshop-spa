@@ -15,6 +15,10 @@ Live site: [smartshop-spa.vercel.app](https://smartshop-spa.vercel.app/)
 - Responsive layout and dark mode
 - Client-side routing that works on Vercel
 
+## 📱 Mobile Responsive View
+
+SmartShop is designed to work smoothly on phones, tablets, and desktop screens. Product grids, navigation, forms, cart controls, and checkout layouts adapt at Tailwind CSS responsive breakpoints so customers can browse and complete purchases on smaller screens.
+
 ## Tech stack
 
 - [Vue 3](https://vuejs.org/)
