@@ -1,4 +1,5 @@
 
+
 The aim 01:
 Create a responsive e-commerce Single Page Application using Vue 3, TypeScript, Vite, and Tailwind CSS.
 
