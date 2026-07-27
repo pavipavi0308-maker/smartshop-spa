@@ -1,1 +1,110 @@
-This file contains prompts.
+
+The aim 01:
+Create a responsive e-commerce Single Page Application using Vue 3, TypeScript, Vite, and Tailwind CSS.
+
+Actual prompt:
+Help me build an e-commerce SPA using Vue 3 Composition API, TypeScript, Vite, and Tailwind CSS.
+
+------------------------------------------------------------
+
+The aim 02:
+Create reusable Vue components for the application.
+
+Actual prompt:
+Create reusable Vue 3 components such as Navbar, ProductCard, SearchBar, and Footer using TypeScript.
+
+------------------------------------------------------------
+
+The aim 03:
+Consume product data from DummyJSON API.
+
+Actual prompt:
+Show me how to fetch product data from DummyJSON API using fetch in Vue 3 with TypeScript.
+
+------------------------------------------------------------
+
+The aim 04:
+Implement product search and category filtering.
+
+Actual prompt:
+Help me implement search functionality and category filtering in Vue 3 using computed properties.
+
+------------------------------------------------------------
+
+The aim 05:
+Create a product detail page using Vue Router.
+
+Actual prompt:
+Show how to create a dynamic product detail page using Vue Router with route parameters.
+
+------------------------------------------------------------
+
+The aim 06:
+Implement shopping cart functionality.
+
+Actual prompt:
+Create a shopping cart using Vue 3 composables that supports add, remove, quantity update, total calculation, and localStorage persistence.
+
+------------------------------------------------------------
+
+The aim 07:
+Implement user authentication.
+
+Actual prompt:
+Help me implement login using the DummyJSON authentication endpoint and store the JWT token in localStorage.
+
+------------------------------------------------------------
+
+The aim 08:
+Create a checkout and payment page.
+
+Actual prompt:
+Design a responsive checkout page with payment options using Vue 3 and Tailwind CSS.
+
+------------------------------------------------------------
+
+The aim 09:
+Implement dark mode.
+
+Actual prompt:
+Show how to implement dark mode in Vue 3 using Tailwind CSS and save the selected theme in localStorage.
+
+------------------------------------------------------------
+
+The aim 10:
+Improve responsive design.
+
+Actual prompt:
+Suggest Tailwind CSS classes to make the application fully responsive for mobile, tablet, and desktop.
+
+------------------------------------------------------------
+
+The aim 11:
+Improve TypeScript interfaces.
+
+Actual prompt:
+Generate strict TypeScript interfaces for products, users, orders, authentication, and shopping cart items.
+
+------------------------------------------------------------
+
+The aim 12:
+Handle API errors.
+
+Actual prompt:
+Help me implement error handling and fallback data when the DummyJSON API is unavailable.
+
+------------------------------------------------------------
+
+The aim 13:
+Write project documentation.
+
+Actual prompt:
+Write a professional README.md for my SmartShop Vue 3 project including installation, features, technologies, deployment, and usage instructions.
+
+------------------------------------------------------------
+
+The aim 14:
+Debug Vue application errors.
+
+Actual prompt:
+Help me debug Vue TypeScript errors, routing issues, and localStorage problems in my SmartShop project.
