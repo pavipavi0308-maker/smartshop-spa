@@ -40,9 +40,9 @@ function navigateTo(path: string) {
 </script>
 
 <template>
-  <header class="sticky top-4 z-40 mx-4 mt-4 rounded-3xl bg-gradient-to-r from-blue-500 via-sky-400 to-slate-900/70 border border-slate-200/60 shadow-sm backdrop-blur-md dark:bg-slate-950/95 dark:border-slate-800">
-    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-      <div class="flex items-center gap-3 cursor-pointer" @click="navigateTo('/')">
+  <header class="relative sticky top-4 z-40 mx-4 mt-4 rounded-3xl bg-gradient-to-r from-blue-600 via-sky-500 to-slate-900 border border-white/10 shadow-lg shadow-slate-900/20 dark:bg-slate-950/95 dark:border-slate-800">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+      <div class="flex items-center gap-3 cursor-pointer z-50" @click="navigateTo('/')">
         <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md">
           <span class="text-lg">S</span>
         </div>
@@ -52,7 +52,7 @@ function navigateTo(path: string) {
         </div>
       </div>
 
-      <div class="flex flex-1 items-center justify-end gap-3">
+      <div class="flex items-center gap-3">
         <button
           @click="toggleDarkMode"
           class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"

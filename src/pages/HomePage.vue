@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue"
 import { fetchProducts } from "../services/api"
@@ -193,39 +194,39 @@ onMounted(async () => {
 
           <div class="space-y-4 rounded-[28px] bg-white/10 p-5">
             <div class="flex items-center gap-3">
-              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">✓</span>
-              <div>
+              <div class="flex-1">
                 <p class="font-semibold">Easy browsing</p>
                 <p class="text-sm text-slate-200/80">Search, filter, and sort in seconds.</p>
               </div>
+              <span class="inline-flex ml-4 h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">✓</span>
             </div>
             <div class="flex items-center gap-3">
-              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">⚡</span>
-              <div>
+              <div class="flex-1">
                 <p class="font-semibold">Curated deals</p>
                 <p class="text-sm text-slate-200/80">Top discounts selected for you.</p>
               </div>
+              <span class="inline-flex ml-4 h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">⚡</span>
             </div>
             <div class="flex items-center gap-3">
-              <span class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">💳</span>
-              <div>
+              <div class="flex-1">
                 <p class="font-semibold">Secure checkout</p>
                 <p class="text-sm text-slate-200/80">Safe payments every time.</p>
               </div>
+              <span class="inline-flex ml-4 h-11 w-11 items-center justify-center rounded-2xl bg-white/15 text-white">💳</span>
             </div>
           </div>
         </div>
       </section>
 
-      <div class="mt-10 flex flex-wrap justify-center gap-3 rounded-4xl border border-slate-300/40 bg-slate-400/25 px-4 py-5 shadow-xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900">
+      <div class="mt-10 flex flex-wrap justify-center gap-2 rounded-full border border-white/60 bg-white/50 px-3 py-3 shadow-lg shadow-slate-900/5 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/70">
         <button
           v-for="cat in categories"
           :key="cat"
           @click="selectedCategory = cat"
-          class="rounded-full px-6 py-3 text-sm font-semibold transition duration-200"
+          class="rounded-full px-6 py-2.5 text-sm font-semibold capitalize transition-all duration-200 ease-out hover:scale-105 active:scale-95"
           :class="selectedCategory === cat
-            ? 'bg-linear-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-sky-500/30 dark:from-blue-500 dark:to-cyan-400'
-            : 'bg-white/85 text-slate-800 border border-white/70 shadow-sm hover:bg-white dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-700'"
+            ? 'bg-linear-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-sky-500/30 dark:from-blue-500 dark:to-cyan-400'
+            : 'text-slate-700 hover:bg-white hover:shadow-sm dark:text-slate-300 dark:hover:bg-slate-800'"
         >
           {{ cat }}
         </button>
